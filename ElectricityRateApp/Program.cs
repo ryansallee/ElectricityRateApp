@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ElectricityRateApp.Data;
+
 
 namespace ElectricityRateApp
 {
@@ -10,6 +7,7 @@ namespace ElectricityRateApp
     {
         static void Main(string[] args)
         {
+            CSVtoDB.CreateDatabase();
         }
     }
 }
