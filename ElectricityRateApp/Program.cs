@@ -10,11 +10,12 @@ namespace ElectricityRateApp
         {
             CSVtoDB.CreateDatabase();
 
-            Console.WriteLine("In which Zip Code?");
-            string zipCode = Console.ReadLine();
-            Console.WriteLine("How many kilowatt hours of usage?");
-            int usage = int.Parse(Console.ReadLine());
-            SearchAndCalculate.CalculateResidentialCharges(zipCode, usage);
+            Console.WriteLine("Compare rates by zip code");
+            Console.WriteLine("What is the first zip code");
+            string zipCode1 = Console.ReadLine();
+            Console.WriteLine("What is the second zip code");
+            string zipCode2 = Console.ReadLine();
+            SearchAndCalculate.CompareRates(zipCode1, zipCode2);
             Console.ReadKey();
         }
     }
