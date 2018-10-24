@@ -3,7 +3,7 @@ namespace ElectricityRateApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitalMigratiom : DbMigration
+    public partial class InitalMigration : DbMigration
     {
         public override void Up()
         {

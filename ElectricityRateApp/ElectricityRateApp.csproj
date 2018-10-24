@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculation Methods\SearchAndCalculate.cs" />
     <Compile Include="Data\CSVtoDB.cs" />
     <Compile Include="Data\ElectricityRatesContext.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigratiom.cs" />
@@ -74,8 +75,6 @@
       <DependentUpon>201810221640109_InitalMigratiom.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Calculation Methods\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
