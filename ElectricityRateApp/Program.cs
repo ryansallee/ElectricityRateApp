@@ -12,10 +12,8 @@ namespace ElectricityRateApp
 
             Console.WriteLine("Compare rates by zip code");
             Console.WriteLine("What is the first zip code");
-            string zipCode1 = Console.ReadLine();
-            Console.WriteLine("What is the second zip code");
-            string zipCode2 = Console.ReadLine();
-            SearchAndCalculate.CompareRates(zipCode1, zipCode2);
+            string zipCode = Console.ReadLine();
+            SearchAndCalculate.GetProviderName(zipCode);
             Console.ReadKey();
         }
     }

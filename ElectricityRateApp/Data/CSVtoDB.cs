@@ -29,12 +29,14 @@ namespace ElectricityRateApp.Data
                     csv.ReadHeader();
                     while (csv.Read())
                     {
+                        //TO DO -> Account for zip codes with a leading 0.
                         string zipCode = csv[0];
                         string utilityName = csv[2];
+                        string stateAbbreviation = csv[3];
                         double residentialRate;
                         if (double.TryParse(csv[8], out residentialRate));
 
-                        var rate = new PowerRate(zipCode, utilityName, residentialRate);
+                        var rate = new PowerRate(zipCode, stateAbbreviation, utilityName, residentialRate);
                         context.PowerRates.Add(rate);
 
                         Console.WriteLine(String.Format("Rate Added! Number{0}", i));

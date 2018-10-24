@@ -13,14 +13,19 @@ namespace ElectricityRateApp.Calculation_Methods
         public static void GetProviderName(string zipCode)
         {
             string electricProvider;
+            string stateAbbreviation;
             using (var context = new ElectricityRatesContext())
             {
                 electricProvider = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
                                     .Select(pr => pr.UtilityName)
-                                    .SingleOrDefault();
+                                   .SingleOrDefault();
+                
+                stateAbbreviation = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
+                                    .Select(pr => pr.StateAbbreviation)
+                                   .SingleOrDefault();
             }
 
-            Console.WriteLine(string.Format("Your electric utility provider is {0}.", electricProvider));
+            Console.WriteLine(string.Format("Your electric utility provider is {0}. {0} is located in {1}", electricProvider, stateAbbreviation));
         }
 
         /// <summary>

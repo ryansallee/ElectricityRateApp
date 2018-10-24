@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201810240134496_RemoveCommercialRate.Designer.cs">
       <DependentUpon>201810240134496_RemoveCommercialRate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810242256057_StateAbbreviationAdd.cs" />
+    <Compile Include="Migrations\201810242256057_StateAbbreviationAdd.Designer.cs">
+      <DependentUpon>201810242256057_StateAbbreviationAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PowerRate.cs" />
     <Compile Include="Program.cs" />
@@ -80,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810240134496_RemoveCommercialRate.resx">
       <DependentUpon>201810240134496_RemoveCommercialRate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242256057_StateAbbreviationAdd.resx">
+      <DependentUpon>201810242256057_StateAbbreviationAdd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
