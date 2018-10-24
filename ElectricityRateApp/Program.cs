@@ -14,7 +14,7 @@ namespace ElectricityRateApp
             string zipCode = Console.ReadLine();
             Console.WriteLine("How many kilowatt hours of usage?");
             int usage = int.Parse(Console.ReadLine());
-            SearchAndCalculate.CalculateCommericalRates(zipCode, usage);
+            SearchAndCalculate.CalculateResidentialCharges(zipCode, usage);
             Console.ReadKey();
         }
     }

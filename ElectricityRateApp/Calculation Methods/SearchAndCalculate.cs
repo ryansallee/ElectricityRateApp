@@ -24,10 +24,10 @@ namespace ElectricityRateApp.Calculation_Methods
         }
 
         /// <summary>
-        /// Calculates and displayes estimated electricity charges
+        /// Calculates and displayes estimated electricity charges for Commer
         /// </summary>s
         /// <param name="usage">An int that represents the number of kiolwatt hours</param>
-        public static void CalculateCommericalRates(string zipCode, int usage)
+        public static void CalculateResidentialCharges(string zipCode, int usage)
         {
             double rate;
             double charge;
@@ -35,7 +35,7 @@ namespace ElectricityRateApp.Calculation_Methods
             {
 
                rate = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
-                        .Select(pr => pr.CommercialRate)
+                        .Select(pr => pr.ResidentialRate)
                         .Sum();
                        
             }

@@ -31,14 +31,10 @@ namespace ElectricityRateApp.Data
                     {
                         string zipCode = csv[0];
                         string utilityName = csv[2];
-                        string commercialRateS = csv[6];
-                        string residentialRateS = csv[8];
-                        double commercialRate = double.Parse(commercialRateS);
-                        double residentialRate = double.Parse(residentialRateS);
-                        //if (double.TryParse(commercialRateS, out commercialRate)) ;
-                        //if (double.TryParse(residentialRateS, out residentialRate)) ;
+                        double residentialRate;
+                        if (double.TryParse(csv[8], out residentialRate)) ;
 
-                        var rate = new PowerRate(zipCode, utilityName, commercialRate, residentialRate);
+                        var rate = new PowerRate(zipCode, utilityName, residentialRate);
                         context.PowerRates.Add(rate);
 
                         Console.WriteLine(String.Format("Rate Added! Number{0}", i));
