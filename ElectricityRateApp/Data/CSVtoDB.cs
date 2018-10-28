@@ -30,7 +30,13 @@ namespace ElectricityRateApp.Data
                     while (csv.Read())
                     {
                         //TO DO -> Account for zip codes with a leading 0.
-                        string zipCode = csv[0];
+                        string zipCode;
+                        if (csv[0].Length < 5)
+                        {
+                            zipCode = "0" + csv[0];
+                        }
+                        else
+                        { zipCode = csv[0]; }
                         string utilityName = csv[2];
                         string stateAbbreviation = csv[3];
                         double residentialRate;

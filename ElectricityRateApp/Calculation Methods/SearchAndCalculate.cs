@@ -10,32 +10,36 @@ namespace ElectricityRateApp.Calculation_Methods
     public static class SearchAndCalculate
     {
         
-        public static void GetProviderName(string zipCode)
+        public static void GetProviderName(string city, string stateAbbreviation)
         {
+            stateAbbreviation.ToUpper();
             string electricProvider;
-            string stateAbbreviation;
+            string zipCode = ZipCodeMethods.GetZipCode(city, stateAbbreviation).Result;
             using (var context = new ElectricityRatesContext())
             {
                 electricProvider = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
-                                    .Select(pr => pr.UtilityName)
-                                   .SingleOrDefault();
-                
-                stateAbbreviation = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
-                                    .Select(pr => pr.StateAbbreviation)
-                                   .SingleOrDefault();
+                                   .Select(pr => pr.UtilityName)
+                                   .FirstOrDefault();                
             }
-
-            Console.WriteLine(string.Format("Your electric utility provider is {0}. {0} is located in {1}", electricProvider, stateAbbreviation));
+            if (electricProvider == null)
+            {
+                Console.WriteLine(string.Format("We unfortunately do not have data on electric utility proivders in {0}, {1}.", city, stateAbbreviation));
+            }
+            else
+            {
+                Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", city, stateAbbreviation, electricProvider));
+            }
         }
 
         /// <summary>
         /// Calculates and displayes estimated electricity charges for Commer
         /// </summary>s
         /// <param name="usage">An int that represents the number of kiolwatt hours</param>
-        public static void CalculateResidentialCharges(string zipCode, int usage)
+        public static void CalculateResidentialCharges(string city, string stateAbbreviation, int usage)
         {
             double rate;
             double charge;
+            string zipCode = ZipCodeMethods.GetZipCode(city, stateAbbreviation).Result;
             using (var context = new ElectricityRatesContext())
             {
 
