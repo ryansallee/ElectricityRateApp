@@ -59,6 +59,7 @@
     <Compile Include="Calculation Methods\SearchAndCalculate.cs" />
     <Compile Include="Data\CSVtoDB.cs" />
     <Compile Include="Data\ElectricityRatesContext.cs" />
+    <Compile Include="Data\SaveSearchResults.cs" />
     <Compile Include="Data\ZipCodeMethods.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.Designer.cs">
@@ -72,8 +73,17 @@
     <Compile Include="Migrations\201810242256057_StateAbbreviationAdd.Designer.cs">
       <DependentUpon>201810242256057_StateAbbreviationAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810312227004_RemovedStateAbbreviation.cs" />
+    <Compile Include="Migrations\201810312227004_RemovedStateAbbreviation.Designer.cs">
+      <DependentUpon>201810312227004_RemovedStateAbbreviation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810312307553_AddedProviderSearchResult.cs" />
+    <Compile Include="Migrations\201810312307553_AddedProviderSearchResult.Designer.cs">
+      <DependentUpon>201810312307553_AddedProviderSearchResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PowerRate.cs" />
+    <Compile Include="Models\ProviderSearchResult.cs" />
     <Compile Include="Models\ZipCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +102,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810242256057_StateAbbreviationAdd.resx">
       <DependentUpon>201810242256057_StateAbbreviationAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810312227004_RemovedStateAbbreviation.resx">
+      <DependentUpon>201810312227004_RemovedStateAbbreviation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810312307553_AddedProviderSearchResult.resx">
+      <DependentUpon>201810312307553_AddedProviderSearchResult.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

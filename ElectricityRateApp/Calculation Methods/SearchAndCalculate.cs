@@ -2,6 +2,7 @@
 using System.Linq;
 using ElectricityRateApp.Data;
 
+
 namespace ElectricityRateApp.Calculation_Methods
 {
     public static class SearchAndCalculate
@@ -35,10 +36,12 @@ namespace ElectricityRateApp.Calculation_Methods
             if (electricProvider == null)
             {
                 Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, state);
+                SaveSearchResults.SaveProviderResult(city, state, "No Info");
             }
             else
             {
                 Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", city, state, electricProvider));
+                SaveSearchResults.SaveProviderResult(city, state, electricProvider);
             }
         }
 

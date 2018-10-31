@@ -8,5 +8,6 @@ namespace ElectricityRateApp.Data
         public ElectricityRatesContext() : base("Rates")
         { }
         public DbSet<PowerRate> PowerRates { get; set; }
+        public DbSet<ProviderSearchResult> ProviderSearchResults { get; set; }
     }
 }
