@@ -1,8 +1,8 @@
 ﻿using ElectricityRateApp.Models;
 using Newtonsoft.Json;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System;
 
 namespace ElectricityRateApp.Data
 {
@@ -24,11 +24,16 @@ namespace ElectricityRateApp.Data
 
             var zipCodesResult = JsonConvert.DeserializeObject<ZipCode>(responseString);
 
-            //TODO Throw exception or find way to handle if the city and state does not exist with an empty array
-            return zipCodesResult.ZipCodes[0];
-                     
+            if (zipCodesResult.ZipCodes.Length < 1)
+            {
+                return null;
+            }
+            else
+            {
+                return zipCodesResult.ZipCodes[0];
+            }    
 
         } 
-     
+
     }
 }
