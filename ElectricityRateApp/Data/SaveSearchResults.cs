@@ -22,5 +22,23 @@ namespace ElectricityRateApp.Data
             }
 
         }
+
+        public static void SaveRateCalculation(string city, string stateAbbreviation, double rate, double charge, int usage)
+        {
+            ResidentialChargeResult searchResult = new ResidentialChargeResult()
+            {
+                City = city,
+                StateAbbreviation = stateAbbreviation,
+                Time = DateTime.Now.ToString(),
+                Rate = rate,
+                Charge = charge,
+                Usage = usage
+            };
+            using (var context = new ElectricityRatesContext())
+            {
+                context.ResidentialChargeResults.Add(searchResult);
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -22,8 +22,16 @@ namespace ElectricityRateApp
             Console.WriteLine("Provide the name of the second state.");
             string stateAbbreviation2 = Console.ReadLine();
             SearchAndCalculate.CompareRates(city1, stateAbbreviation1, city2, stateAbbreviation2);
-            Console.ReadKey();
 
+
+            Console.WriteLine("You can calculate your variable (non-fixed) monthly electricity usage charge. Please provide an estimated usage in kilowatt hours");
+            int usage = int.Parse(Console.ReadLine());
+            Console.WriteLine("Provide the city name.");
+            string city = Console.ReadLine();
+            Console.WriteLine("Provide the state abbreviation");
+            string stateAbbreviation = Console.ReadLine();
+            SearchAndCalculate.CalculateResidentialCharges(city, stateAbbreviation, usage);
+            Console.ReadKey();
         }
     }
 }

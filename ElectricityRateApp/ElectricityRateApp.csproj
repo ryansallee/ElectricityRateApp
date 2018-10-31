@@ -81,9 +81,14 @@
     <Compile Include="Migrations\201810312307553_AddedProviderSearchResult.Designer.cs">
       <DependentUpon>201810312307553_AddedProviderSearchResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810312332152_AddedResidentialChargResult.cs" />
+    <Compile Include="Migrations\201810312332152_AddedResidentialChargResult.Designer.cs">
+      <DependentUpon>201810312332152_AddedResidentialChargResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PowerRate.cs" />
     <Compile Include="Models\ProviderSearchResult.cs" />
+    <Compile Include="Models\ResidentialChargeResult.cs" />
     <Compile Include="Models\ZipCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810312307553_AddedProviderSearchResult.resx">
       <DependentUpon>201810312307553_AddedProviderSearchResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810312332152_AddedResidentialChargResult.resx">
+      <DependentUpon>201810312332152_AddedResidentialChargResult.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

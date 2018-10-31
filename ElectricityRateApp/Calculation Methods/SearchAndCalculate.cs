@@ -84,10 +84,12 @@ namespace ElectricityRateApp.Calculation_Methods
             if (rate == 0)
             {
                 Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, state));
+                SaveSearchResults.SaveRateCalculation(city, state, 0, 0, usage);
                 return;
             }
             charge = (double)(rate * usage);
             Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", usage, charge));
+            SaveSearchResults.SaveRateCalculation(city, state, rate, charge, usage);
         }
 
         public static void CompareRates(string city1, string stateAbbreviation1, string city2, string stateAbbreviation2)
