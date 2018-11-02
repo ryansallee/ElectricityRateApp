@@ -13,7 +13,7 @@ namespace ElectricityRateApp.Data
                 City = city,
                 StateAbbreviation = stateAbbreviation,
                 ProviderName = provider,
-                Time = DateTime.Now.ToString()
+                Time = DateTime.Now.ToString("MM/dd/yy HH:mm")
             };
             using (var context = new ElectricityRatesContext())
             {

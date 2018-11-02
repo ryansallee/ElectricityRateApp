@@ -3,7 +3,7 @@ using System.Linq;
 using ElectricityRateApp.Data;
 
 
-namespace ElectricityRateApp.GetandCalculate
+namespace ElectricityRateApp.GetAndCalculate
 
 {
     public static class SearchAndCalculate
