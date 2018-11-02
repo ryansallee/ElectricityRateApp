@@ -8,6 +8,7 @@ namespace ElectricityRateApp
     {
         static void  Main(string[] args)
         {
+            Console.SetWindowSize(Console.LargestWindowWidth-5, Console.LargestWindowHeight-10);
             CSVtoDB.CreateDatabase();
 
             Console.WriteLine("Obtain the name of the electric provider in your city");
@@ -32,7 +33,10 @@ namespace ElectricityRateApp
             //SearchAndCalculate.CalculateResidentialCharges(city, stateAbbreviation, usage);
             //Console.ReadKey();
 
-            SearchResults.GetProviderSearchResults();
+            SearchResults.GetProviderSearchHistory();
+            
+            Console.ReadKey();
+            SearchResults.GetChargeCalcuationHistory();
             Console.ReadKey();
         }
     }

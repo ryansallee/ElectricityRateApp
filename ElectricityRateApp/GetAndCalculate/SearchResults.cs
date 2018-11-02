@@ -8,7 +8,7 @@ namespace ElectricityRateApp.GetAndCalculate
 {
     public class SearchResults
     {
-        public static void GetProviderSearchResults()
+        public static void GetProviderSearchHistory()
         {
             int numberOfResults;
             Console.WriteLine("How many of the most recent electric utility provider search results would you like?");
@@ -28,8 +28,49 @@ namespace ElectricityRateApp.GetAndCalculate
                 Console.WriteLine("Time \t \t City \t \t State \t Provider");
                 foreach (var result in results)
                 {
-                    Console.WriteLine(string.Format("{0} \t {1} \t {2} \t {3}", result.Time,
+                    if (result.City.Length <= 5)
+                    {
+                        Console.WriteLine(string.Format("{0} \t {1} \t\t {2} \t {3}", result.Time,
                         result.City, result.StateAbbreviation, result.ProviderName));
+                    }
+                    else
+                    {
+                        Console.WriteLine(string.Format("{0} \t {1} \t {2} \t {3}", result.Time,
+                            result.City, result.StateAbbreviation, result.ProviderName));
+                    }
+                }
+            }
+        }
+
+        public static void GetChargeCalcuationHistory()
+        {
+            int numberOfResults;
+            Console.WriteLine("How many of the most recent electric residential charge calculations would you like?");
+            bool success = int.TryParse(Console.ReadLine(), out numberOfResults);
+            if (!success)
+            {
+                Console.WriteLine("Please provide a valid number. Please try again.");
+                return;
+            }
+
+            Console.WriteLine(string.Format("Here are the last {0} results", numberOfResults));
+            using (var context = new ElectricityRatesContext())
+            {
+                var results = context.ResidentialChargeResults.OrderByDescending(r => r.Id)
+                    .Take(numberOfResults);
+                Console.WriteLine();
+                foreach (var result in results)
+                {
+                    if (result.City.Length <= 5)
+                    {
+                        Console.WriteLine(string.Format("{0} \t {1} \t\t {2} \t {3} \t{4} \t {5}",
+                        result.Time, result.City, result.StateAbbreviation, result.Rate, result.Charge, result.Usage));
+                    }
+                    else
+                    {
+                        Console.WriteLine(string.Format("{0} \t {1} \t {2} \t {3} \t{4} \t {5}",
+                            result.Time, result.City, result.StateAbbreviation, result.Rate, result.Charge, result.Usage));
+                    }
                 }
             }
         }

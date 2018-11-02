@@ -29,7 +29,7 @@ namespace ElectricityRateApp.Data
             {
                 City = city,
                 StateAbbreviation = stateAbbreviation,
-                Time = DateTime.Now.ToString(),
+                Time = DateTime.Now.ToString("MM/dd/yy HH:mm"),
                 Rate = rate,
                 Charge = charge,
                 Usage = usage
@@ -46,7 +46,7 @@ namespace ElectricityRateApp.Data
         {
             RateComparisonResult searchResult = new RateComparisonResult()
             {
-                Time = DateTime.Now.ToString(),
+                Time = DateTime.Now.ToString("MM/dd/yy HH:mm"),
                 City1 = city1,
                 StateAbbreviation1 = stateAbbreivation1,
                 Rate1 = rate1,
