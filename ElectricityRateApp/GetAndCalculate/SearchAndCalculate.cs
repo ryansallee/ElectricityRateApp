@@ -3,7 +3,8 @@ using System.Linq;
 using ElectricityRateApp.Data;
 
 
-namespace ElectricityRateApp.Calculation_Methods
+namespace ElectricityRateApp.GetandCalculate
+
 {
     public static class SearchAndCalculate
     {
@@ -16,13 +17,13 @@ namespace ElectricityRateApp.Calculation_Methods
                 return;
             }
 
-            string state = stateAbbreviation.ToUpper();
+            
             string electricProvider;
             string zipCode = ZipCodeMethods.GetZipCode(city, stateAbbreviation).Result;
             //TODO Null check method?
             if (zipCode == null)
             {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US", city, state));
+                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US", city, stateAbbreviation));
                 return;
             }
             //TODO Get provider method.
@@ -35,13 +36,13 @@ namespace ElectricityRateApp.Calculation_Methods
 
             if (electricProvider == null)
             {
-                Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, state);
-                SaveSearchResults.SaveProviderResult(city, state, "No Info");
+                Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, stateAbbreviation);
+                SaveSearchResults.SaveProviderResult(city, stateAbbreviation, "No Info");
             }
             else
             {
-                Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", city, state, electricProvider));
-                SaveSearchResults.SaveProviderResult(city, state, electricProvider);
+                Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", city, stateAbbreviation, electricProvider));
+                SaveSearchResults.SaveProviderResult(city, stateAbbreviation, electricProvider);
             }
         }
 
@@ -61,13 +62,12 @@ namespace ElectricityRateApp.Calculation_Methods
                 Console.WriteLine("The usage was not provided. Estimated charges cannot be provided. Please try again");
                 return;
             }
-            string state = stateAbbreviation.ToUpper();
             double rate;
             double charge;
-            string zipCode = ZipCodeMethods.GetZipCode(city, state).Result;
+            string zipCode = ZipCodeMethods.GetZipCode(city, stateAbbreviation).Result;
             if (zipCode == null)
             {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with calculating the estimated charges. Please try again.", city, state));
+                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with calculating the estimated charges. Please try again.", city, stateAbbreviation));
                 return;
             }
             //TODO GetRate Method
@@ -83,13 +83,13 @@ namespace ElectricityRateApp.Calculation_Methods
             //TODO Handle if rate is 0.
             if (rate == 0)
             {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, state));
-                SaveSearchResults.SaveRateCalculation(city, state, 0, 0, usage);
+                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, stateAbbreviation));
+                SaveSearchResults.SaveRateCalculation(city, stateAbbreviation, 0, 0, usage);
                 return;
             }
             charge = (double)(rate * usage);
             Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", usage, charge));
-            SaveSearchResults.SaveRateCalculation(city, state, rate, charge, usage);
+            SaveSearchResults.SaveRateCalculation(city, stateAbbreviation, rate, charge, usage);
         }
 
         public static void CompareRates(string city1, string stateAbbreviation1, string city2, string stateAbbreviation2)
@@ -110,21 +110,20 @@ namespace ElectricityRateApp.Calculation_Methods
                 return;
             }
            
-            string state1 = stateAbbreviation1.ToUpper();
-            string state2 = stateAbbreviation2.ToUpper();
+            
             double rate1;  
             double rate2;
-            string zipCode1 = ZipCodeMethods.GetZipCode(city1, state1).Result;
+            string zipCode1 = ZipCodeMethods.GetZipCode(city1, stateAbbreviation1).Result;
             //TODO null checks
             if (zipCode1 == null)
             {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with comparing rates. Please try again.", city1, state1));
+                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with comparing rates. Please try again.", city1, stateAbbreviation1));
                 return;
             }
-            string zipCode2 = ZipCodeMethods.GetZipCode(city2, state2).Result;
+            string zipCode2 = ZipCodeMethods.GetZipCode(city2, stateAbbreviation2).Result;
             if (zipCode2 == null)
             {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with comparing rates. Please try again.", city2, state2));
+                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with comparing rates. Please try again.", city2, stateAbbreviation2));
                 return;
             }
             //TODO Get Rate Method
@@ -147,36 +146,38 @@ namespace ElectricityRateApp.Calculation_Methods
             {
                 Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} and {2}, {3}. " +
                    "We cannot calculate any rates.",
-                   city1, state1, city2, state2));
+                   city1, stateAbbreviation1, city2, stateAbbreviation2));
                 return;
             }
             else if (rate1 == 0)
             {
                 Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
                     "and cannot compare the rates of {0}, {1} with {2}, {3}.",
-                    city1, state1, city2, state2));
+                    city1, stateAbbreviation1, city2, stateAbbreviation2));
                 return;
             }
             else if (rate2 == 0)
             {
                 Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
                    "and cannot compare the rates of {0}, {1} with {2}, {3}.",
-                   city2, state2, city1, state1));
+                   city2, stateAbbreviation2, city1, stateAbbreviation1));
                 return;
             }
 
+            double difference = Math.Abs(((rate1 - rate2) / rate2));
+            
             if (rate1 > rate2)
             {
-                double difference = (rate1 - rate2) / rate2;
                 Console.WriteLine(String.Format("The rate in {0}, {1} is {2:P2} more than in {3}, {4}.",
-                    city1, state1, difference, city2, state2));
+                    city1, stateAbbreviation1, difference, city2, stateAbbreviation2));
+                
             }
             else if (rate2 > rate1)
             {
-                double difference = (rate2 - rate1) / rate2;
                 Console.WriteLine(String.Format("The rate in  {0}, {1} is {2:P2} less than in {3}, {4}.",
-                    city1, state1, difference, city2, state2));
+                    city1, stateAbbreviation1, difference, city2, stateAbbreviation2));
             }
+            SaveSearchResults.SaveRateComparison(city1, stateAbbreviation1, rate1, difference, city2, stateAbbreviation2, rate2);
         }
             
         

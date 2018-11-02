@@ -13,7 +13,7 @@ namespace ElectricityRateApp.Data
                 City = city,
                 StateAbbreviation = stateAbbreviation,
                 ProviderName = provider,
-                Time = DateTime.Now.ToString(),
+                Time = DateTime.Now.ToString()
             };
             using (var context = new ElectricityRatesContext())
             {
@@ -37,6 +37,28 @@ namespace ElectricityRateApp.Data
             using (var context = new ElectricityRatesContext())
             {
                 context.ResidentialChargeResults.Add(searchResult);
+                context.SaveChanges();
+            }
+        }
+
+        public static void SaveRateComparison(string city1, string stateAbbreivation1, double rate1, double difference,
+            string city2, string stateAbbreviation2, double rate2)
+        {
+            RateComparisonResult searchResult = new RateComparisonResult()
+            {
+                Time = DateTime.Now.ToString(),
+                City1 = city1,
+                StateAbbreviation1 = stateAbbreivation1,
+                Rate1 = rate1,
+                Difference = difference,
+                City2 = city2,
+                StateAbbreviation2 = stateAbbreviation2,
+                Rate2 = rate2
+            };
+
+            using (var context = new ElectricityRatesContext())
+            {
+                context.RateComparisonResults.Add(searchResult);
                 context.SaveChanges();
             }
         }

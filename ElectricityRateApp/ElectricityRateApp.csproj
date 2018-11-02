@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculation Methods\SearchAndCalculate.cs" />
+    <Compile Include="GetAndCalculate\SearchAndCalculate.cs" />
     <Compile Include="Data\CSVtoDB.cs" />
     <Compile Include="Data\ElectricityRatesContext.cs" />
     <Compile Include="Data\SaveSearchResults.cs" />
@@ -85,9 +85,14 @@
     <Compile Include="Migrations\201810312332152_AddedResidentialChargResult.Designer.cs">
       <DependentUpon>201810312332152_AddedResidentialChargResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811012330216_AddedRateComparisonResult.cs" />
+    <Compile Include="Migrations\201811012330216_AddedRateComparisonResult.Designer.cs">
+      <DependentUpon>201811012330216_AddedRateComparisonResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PowerRate.cs" />
     <Compile Include="Models\ProviderSearchResult.cs" />
+    <Compile Include="Models\RateComparisonResult.cs" />
     <Compile Include="Models\ResidentialChargeResult.cs" />
     <Compile Include="Models\ZipCode.cs" />
     <Compile Include="Program.cs" />
@@ -116,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810312332152_AddedResidentialChargResult.resx">
       <DependentUpon>201810312332152_AddedResidentialChargResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811012330216_AddedRateComparisonResult.resx">
+      <DependentUpon>201811012330216_AddedRateComparisonResult.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
