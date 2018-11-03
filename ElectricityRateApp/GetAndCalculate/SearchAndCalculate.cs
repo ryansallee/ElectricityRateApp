@@ -164,18 +164,18 @@ namespace ElectricityRateApp.GetAndCalculate
                 return;
             }
 
-            double difference = Math.Abs(((rate1 - rate2) / rate2));
+            double difference = (rate1 - rate2) / rate2;
             
             if (rate1 > rate2)
             {
                 Console.WriteLine(String.Format("The rate in {0}, {1} is {2:P2} more than in {3}, {4}.",
-                    city1, stateAbbreviation1, difference, city2, stateAbbreviation2));
+                    city1, stateAbbreviation1, Math.Abs(difference), city2, stateAbbreviation2));
                 
             }
             else if (rate2 > rate1)
             {
                 Console.WriteLine(String.Format("The rate in  {0}, {1} is {2:P2} less than in {3}, {4}.",
-                    city1, stateAbbreviation1, difference, city2, stateAbbreviation2));
+                    city1, stateAbbreviation1, Math.Abs(difference), city2, stateAbbreviation2));
             }
             SaveSearchResults.SaveRateComparison(city1, stateAbbreviation1, rate1, difference, city2, stateAbbreviation2, rate2);
         }

@@ -62,5 +62,7 @@ namespace ElectricityRateApp.Data
                 context.SaveChanges();
             }
         }
+
+
     }
 }
