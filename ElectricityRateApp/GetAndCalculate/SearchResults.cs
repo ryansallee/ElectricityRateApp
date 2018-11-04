@@ -58,7 +58,7 @@ namespace ElectricityRateApp.GetAndCalculate
             {
                 var results = context.ResidentialChargeResults.OrderByDescending(r => r.Id)
                     .Take(numberOfResults);
-                Console.WriteLine("Time \t \t City \t \t State \t Rate \t Charge \t Usage(kwh)");
+                Console.WriteLine("Time \t \t City \t \t State \t Rate \t Charge\t Usage(kwh)");
                 foreach (var result in results)
                 {
                     if (result.City.Length <= 5)
@@ -95,7 +95,9 @@ namespace ElectricityRateApp.GetAndCalculate
                 Console.WriteLine();
                 foreach (var result in results)
                 {
-                    //Console.WriteLine(string.Format(""),result.Time, result.C)
+                    Console.WriteLine(string.Format("{0} \t {1} \t\t {2} \t {3:C} \t{4} \t {5} \t{6:C} \t {7:P2}",
+                        result.Time, result.City1, result.StateAbbreviation1, result.Rate1,
+                        result.City2, result.StateAbbreviation2, result.Rate2, result.Difference));
                 }
             }
         }

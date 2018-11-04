@@ -8,7 +8,7 @@ namespace ElectricityRateApp
     {
         static void  Main(string[] args)
         {
-            Console.SetWindowSize(Console.LargestWindowWidth-5, Console.LargestWindowHeight-10);
+            Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
             CSVtoDB.CreateDatabase();
 
             Console.WriteLine("Obtain the name of the electric provider in your city");
@@ -17,11 +17,11 @@ namespace ElectricityRateApp
             Console.WriteLine("Provide the name of the first state.");
             string stateAbbreviation1 = Console.ReadLine().ToUpper();
             SearchAndCalculate.GetProviderName(city1, stateAbbreviation1);
-            //Console.WriteLine("Provide the name of the second city.");
-            //string city2 = Console.ReadLine().ToUpper();
-            //Console.WriteLine("Provide the name of the second state.");
-            //string stateAbbreviation2 = Console.ReadLine().ToUpper();
-            //SearchAndCalculate.CompareRates(city1, stateAbbreviation1, city2, stateAbbreviation2);
+            Console.WriteLine("Provide the name of the second city.");
+            string city2 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Provide the name of the second state.");
+            string stateAbbreviation2 = Console.ReadLine().ToUpper();
+            SearchAndCalculate.CompareRates(city1, stateAbbreviation1, city2, stateAbbreviation2);
 
 
             Console.WriteLine("You can calculate your variable (non-fixed) monthly electricity usage charge. Please provide an estimated usage in kilowatt hours");
@@ -37,6 +37,8 @@ namespace ElectricityRateApp
             
             Console.ReadKey();
             SearchResults.GetChargeCalcuationHistory();
+            Console.ReadKey();
+            SearchResults.GetRateComparisonHistory();
             Console.ReadKey();
         }
     }
