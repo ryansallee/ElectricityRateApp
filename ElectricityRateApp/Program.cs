@@ -9,37 +9,51 @@ namespace ElectricityRateApp
         static void  Main(string[] args)
         {
             Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
+            Console.WriteLine("Welcome to the Electricity Rate App.");
             CSVtoDB.CreateDatabase();
+            SearchAndCalculate.GetProviderName();
+            SearchAndCalculate.CalculateResidentialCharges();
+            SearchAndCalculate.CompareRates();
 
-            Console.WriteLine("Obtain the name of the electric provider in your city");
-            Console.WriteLine("Provide the name of the first city");
-            string city1 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Provide the name of the first state.");
-            string stateAbbreviation1 = Console.ReadLine().ToUpper();
-            SearchAndCalculate.GetProviderName(city1, stateAbbreviation1);
-            Console.WriteLine("Provide the name of the second city.");
-            string city2 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Provide the name of the second state.");
-            string stateAbbreviation2 = Console.ReadLine().ToUpper();
-            SearchAndCalculate.CompareRates(city1, stateAbbreviation1, city2, stateAbbreviation2);
+            var menuOption = MainMenu();
 
+            //while(menuOption <5)
+            //{
+            //    switch (menuOption)
+            //    {
+            //        case 1:
+            //            SearchAndCalculate.GetProviderName();
+            //            break;
 
-            Console.WriteLine("You can calculate your variable (non-fixed) monthly electricity usage charge. Please provide an estimated usage in kilowatt hours");
-            int usage = int.Parse(Console.ReadLine());
-            Console.WriteLine("Provide the city name.");
-            string city = Console.ReadLine().ToUpper();
-            Console.WriteLine("Provide the state abbreviation");
-            string stateAbbreviation = Console.ReadLine().ToUpper();
-            SearchAndCalculate.CalculateResidentialCharges(city, stateAbbreviation, usage);
-            Console.ReadKey();
-
-            SearchResults.GetProviderSearchHistory();
+            //    }
+            //}
             
-            Console.ReadKey();
-            SearchResults.GetChargeCalcuationHistory();
-            Console.ReadKey();
-            SearchResults.GetRateComparisonHistory();
-            Console.ReadKey();
+        }
+
+        static int MainMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("\t Main Menu:");
+            Console.WriteLine("\t Please select from the following options below:");
+            Console.WriteLine();
+            Console.WriteLine("\t 1. \t Find an Electric Utlity Provider");
+            Console.WriteLine("\t 2. \t Calculate Estimated Electricity Charges for a City");
+            Console.WriteLine("\t 3. \t Compare Eletricity Rates between Cities");
+            Console.WriteLine("\t 4. \t Get Previous Electricity Provider Searches");
+            Console.WriteLine("\t 5. \t Get Previous Electricity Charge Estimates");
+            Console.WriteLine("\t 6. \t Get Prevous Rate Comparisons");
+            Console.WriteLine("\t 7. \t Exit");
+            Console.WriteLine();
+
+            var selection = Console.ReadLine();
+            bool success = int.TryParse(selection, out int option);
+            if (!success || option < 1 || option > 7)
+            {
+                Console.WriteLine("You did not provide a valid option. Please try again");
+                Console.Clear();
+                MainMenu();
+            }
+            return option;
         }
     }
 }

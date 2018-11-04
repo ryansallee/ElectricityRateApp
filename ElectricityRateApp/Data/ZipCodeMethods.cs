@@ -14,8 +14,10 @@ namespace ElectricityRateApp.Data
             if (HttpClient == null)
                 HttpClient = new HttpClient();
 
-            
-            var responseMessage = await HttpClient.GetAsync("https://www.zipcodeapi.com/rest/vMGbJYN2IJf2EbjVN2h8bERvkD55ZwNuFcfSWzMtxwPKdi6t0dCV0k6LgZp127rG/city-zips.json/" + city + "/" + stateAbbreviation);
+            string apiKey = "vMGbJYN2IJf2EbjVN2h8bERvkD55ZwNuFcfSWzMtxwPKdi6t0dCV0k6LgZp127rG";
+
+
+            var responseMessage = await HttpClient.GetAsync("https://www.zipcodeapi.com/rest/" + apiKey +"/city-zips.json/" + city + "/" + stateAbbreviation);
 
             if (!responseMessage.IsSuccessStatusCode)
                 throw new System.Exception("Unable to connect to ZipCodeApi to obtain city zipCode");

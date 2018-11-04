@@ -2,42 +2,36 @@
 using System.Linq;
 using ElectricityRateApp.Data;
 
-
 namespace ElectricityRateApp.GetAndCalculate
-
 {
     public static class SearchAndCalculate
-    {
-        
-        public static void GetProviderName(string city, string stateAbbreviation)
+    {        
+        public static void GetProviderName()
         {
-            if(string.IsNullOrEmpty(city) || string.IsNullOrEmpty(stateAbbreviation))
-            {
-                Console.WriteLine("A city and/or state was not provided. Please try again.");
+            Console.WriteLine("Please provide the name of the city for which you would like to find the Electric Utility Proivder.");
+            string city = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            string stateAbbreviation = Console.ReadLine().ToUpper();
+            if (!SearchAndCalculateHelpers.CheckValidInput(city, stateAbbreviation))
                 return;
-            }
-
-            
-            string electricProvider;
+                        
             string zipCode = ZipCodeMethods.GetZipCode(city, stateAbbreviation).Result;
-            //TODO Null check method?
-            if (zipCode == null)
-            {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US", city, stateAbbreviation));
+            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, city, stateAbbreviation))
                 return;
-            }
+
             //TODO Get provider method.
+            string electricProvider;
             using (var context = new ElectricityRatesContext())
             {
                 electricProvider = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
                                    .Select(pr => pr.UtilityName)
                                    .FirstOrDefault();                
             }
-
+            //TODO Check if provider is null method?
             if (electricProvider == null)
             {
                 Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, stateAbbreviation);
-                SaveSearchResults.SaveProviderResult(city, stateAbbreviation, "No Info");
+                SaveSearchResults.SaveProviderResult(city, stateAbbreviation, "No Provider Info Found");
             }
             else
             {
@@ -50,27 +44,24 @@ namespace ElectricityRateApp.GetAndCalculate
         /// Calculates and displayes estimated electricity charges for Commer
         /// </summary>
         /// <param name="usage">An int that represents the number of kiolwatt hours</param>
-        public static void CalculateResidentialCharges(string city, string stateAbbreviation, int usage)
+        public static void CalculateResidentialCharges()
         {
-            if (string.IsNullOrEmpty(city) || string.IsNullOrEmpty(stateAbbreviation))
-            {
-                Console.WriteLine("A city and/or state was not provided. Please try again.");
+            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based charges.");
+            string city = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            string stateAbbreviation = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the usage in kilowatt hours(kWh). Most often your utility bill will have this information");
+            int usage;
+            int.TryParse(Console.ReadLine(), out usage);
+            if (!SearchAndCalculateHelpers.CheckValidInput(city, stateAbbreviation, usage))
                 return;
-            }
-            else if(usage == 0)
-            {
-                Console.WriteLine("The usage was not provided. Estimated charges cannot be provided. Please try again");
-                return;
-            }
-            double rate;
-            double charge;
+
             string zipCode = ZipCodeMethods.GetZipCode(city, stateAbbreviation).Result;
-            if (zipCode == null)
-            {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with calculating the estimated charges. Please try again.", city, stateAbbreviation));
+            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, city, stateAbbreviation))
                 return;
-            }
+
             //TODO GetRate Method
+            double rate;
             using (var context = new ElectricityRatesContext())
             {
 
@@ -80,53 +71,41 @@ namespace ElectricityRateApp.GetAndCalculate
                         .Sum();
                        
             }
-            //TODO Handle if rate is 0.
+            //TODO Check if rate is 0 method?
             if (rate == 0)
             {
                 Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", city, stateAbbreviation));
                 SaveSearchResults.SaveRateCalculation(city, stateAbbreviation, 0, 0, usage);
                 return;
             }
-            charge = (double)(rate * usage);
+            double charge = (double)(rate * usage);
             Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", usage, charge));
             SaveSearchResults.SaveRateCalculation(city, stateAbbreviation, rate, charge, usage);
         }
 
-        public static void CompareRates(string city1, string stateAbbreviation1, string city2, string stateAbbreviation2)
+        public static void CompareRates()
         {
-            if(string.IsNullOrEmpty(city1) || string.IsNullOrEmpty(stateAbbreviation1) && string.IsNullOrEmpty(city2) || string.IsNullOrEmpty(stateAbbreviation2))
-            {
-                Console.WriteLine("A city and/or state was not provided for both locations. Please try again.");
+            Console.WriteLine("Please provide the name of the first city in your rate comparsion");
+            string city1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            string stateAbbreviation1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the name of the second city.");
+            string city2 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            string stateAbbreviation2 = Console.ReadLine().ToUpper();
+            if (!SearchAndCalculateHelpers.CheckValidInput(city1, stateAbbreviation1, city2, stateAbbreviation2))
                 return;
-            }
-            else if (string.IsNullOrEmpty(city1) || string.IsNullOrEmpty(stateAbbreviation1))
-            {
-                Console.WriteLine("A city and/or state was not provided for the first location. Please try again.");
-                return;
-            }
-            else if (string.IsNullOrEmpty(city2) || string.IsNullOrEmpty(stateAbbreviation2))
-            {
-                Console.WriteLine("A city and/or state was not provided for the second location. Please try again.");
-                return;
-            }
-           
-            
-            double rate1;  
-            double rate2;
+
             string zipCode1 = ZipCodeMethods.GetZipCode(city1, stateAbbreviation1).Result;
-            //TODO null checks
-            if (zipCode1 == null)
-            {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with comparing rates. Please try again.", city1, stateAbbreviation1));
-                return;
-            }
             string zipCode2 = ZipCodeMethods.GetZipCode(city2, stateAbbreviation2).Result;
-            if (zipCode2 == null)
-            {
-                Console.WriteLine(string.Format("{0}, {1} is not a city that exists in the US. Unfortunately, we cannot proceed with comparing rates. Please try again.", city2, stateAbbreviation2));
+
+            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode1, city1, stateAbbreviation1, 
+                    zipCode2, city2, stateAbbreviation2))
                 return;
-            }
+
             //TODO Get Rate Method
+            double rate1;
+            double rate2;
             using (var context = new ElectricityRatesContext())
             {
 
@@ -141,7 +120,7 @@ namespace ElectricityRateApp.GetAndCalculate
                          .Sum();
             }
 
-            //TODO Handle if rate is 0.
+            //TODO Check if rate is 0 method?.
             if (rate1 == 0 && rate2 == 0)
             {
                 Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} and {2}, {3}. " +
@@ -178,8 +157,7 @@ namespace ElectricityRateApp.GetAndCalculate
                     city1, stateAbbreviation1, Math.Abs(difference), city2, stateAbbreviation2));
             }
             SaveSearchResults.SaveRateComparison(city1, stateAbbreviation1, rate1, difference, city2, stateAbbreviation2, rate2);
-        }
-            
+        }         
         
     }
 }

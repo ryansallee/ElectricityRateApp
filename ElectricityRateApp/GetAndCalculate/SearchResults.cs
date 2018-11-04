@@ -10,9 +10,8 @@ namespace ElectricityRateApp.GetAndCalculate
     {
         public static void GetProviderSearchHistory()
         {
-            int numberOfResults;
             Console.WriteLine("How many of the most recent electric utility provider search results would you like?");
-            bool success = int.TryParse(Console.ReadLine(), out numberOfResults);
+            bool success = int.TryParse(Console.ReadLine(), out int numberOfResults);
             if(!success)
             {
                 Console.WriteLine("Please provide a valid number. Please try again.");
@@ -44,9 +43,8 @@ namespace ElectricityRateApp.GetAndCalculate
 
         public static void GetChargeCalcuationHistory()
         {
-            int numberOfResults;
             Console.WriteLine("How many of the most recent electric residential charge calculations would you like?");
-            bool success = int.TryParse(Console.ReadLine(), out numberOfResults);
+            bool success = int.TryParse(Console.ReadLine(), out int numberOfResults);
             if (!success)
             {
                 Console.WriteLine("Please provide a valid number. Please try again.");
@@ -77,9 +75,8 @@ namespace ElectricityRateApp.GetAndCalculate
 
         public static void GetRateComparisonHistory()
         {
-            int numberOfResults;
             Console.WriteLine("How many of the most recent rate comparisons would you like?");
-            bool success = int.TryParse(Console.ReadLine(), out numberOfResults);
+            bool success = int.TryParse(Console.ReadLine(), out int numberOfResults);
             if(!success)
             {
                 Console.WriteLine("Please provide a valid number. Please try again");
