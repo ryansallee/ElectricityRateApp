@@ -11,23 +11,39 @@ namespace ElectricityRateApp
             Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
             Console.WriteLine("Welcome to the Electricity Rate App.");
             CSVtoDB.CreateDatabase();
-            SearchAndCalculate.GetProviderName();
-            SearchAndCalculate.CalculateResidentialCharges();
-            SearchAndCalculate.CompareRates();
 
             var menuOption = MainMenu();
 
-            //while(menuOption <5)
-            //{
-            //    switch (menuOption)
-            //    {
-            //        case 1:
-            //            SearchAndCalculate.GetProviderName();
-            //            break;
+            while (menuOption < 7)
+            {
+                switch (menuOption)
+                {
+                    case 1:
+                        SearchAndCalculate.GetProviderName();
+                        break;
+                    case 2:
+                        SearchAndCalculate.CalculateResidentialCharges();
+                        break;
+                    case 3:
+                        SearchAndCalculate.CompareRates();
+                        break;
+                    case 4:
+                        SearchResults.GetProviderSearchHistory();
+                        break;
+                    case 5:
+                        SearchResults.GetChargeCalcuationHistory();
+                        break;
+                    case 6:
+                        SearchResults.GetRateComparisonHistory();
+                        break;
+                    case 7:
+                        break;
 
-            //    }
-            //}
-            
+                }
+                if (menuOption != 7)
+                    menuOption = MainMenu();
+            }
+
         }
 
         static int MainMenu()
