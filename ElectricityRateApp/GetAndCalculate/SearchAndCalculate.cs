@@ -63,14 +63,7 @@ namespace ElectricityRateApp.GetAndCalculate
             if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
                 return;
 
-            //TODO GetRate Method
-            using (var context = new ElectricityRatesContext())
-            {
-               chargeResult.Rate = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
-                        .Select(pr => pr.ResidentialRate)
-                        .DefaultIfEmpty(0)
-                        .Sum();                       
-            }
+            chargeResult.Rate = GetFromPowerRates.GetRate(zipCode);
             chargeResult.Charge = chargeResult.Rate * chargeResult.Usage;
 
             if(!SearchAndCalculateHelpers.CheckIfRateIs0(chargeResult))
@@ -100,20 +93,8 @@ namespace ElectricityRateApp.GetAndCalculate
                     zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))
                 return;
 
-            //TODO Get Rate Method
-            using (var context = new ElectricityRatesContext())
-            {
-
-                rateComparison.Rate1 = context.PowerRates.Where(pr => pr.ZipCode == zipCode1)
-                         .Select(pr => pr.ResidentialRate)
-                         .DefaultIfEmpty(0)
-                         .Sum();
-
-                rateComparison.Rate2 = context.PowerRates.Where(pr => pr.ZipCode == zipCode2)
-                         .Select(pr => pr.ResidentialRate)
-                         .DefaultIfEmpty(0)
-                         .Sum();
-            }
+            rateComparison.Rate1 = GetFromPowerRates.GetRate(zipCode1);
+            rateComparison.Rate2 = GetFromPowerRates.GetRate(zipCode2);
 
             if (!SearchAndCalculateHelpers.CheckIfRateIs0(rateComparison))
                 return;
@@ -124,8 +105,7 @@ namespace ElectricityRateApp.GetAndCalculate
             {
                 Console.WriteLine(String.Format("The rate in {0}, {1} is {2:P2} more than in {3}, {4}.",
                     rateComparison.City1, rateComparison.StateAbbreviation1, Math.Abs(rateComparison.Difference), 
-                    rateComparison.City2, rateComparison.StateAbbreviation2));
-                
+                    rateComparison.City2, rateComparison.StateAbbreviation2));                
             }
             else if (rateComparison.Rate2 > rateComparison.Rate1)
             {
