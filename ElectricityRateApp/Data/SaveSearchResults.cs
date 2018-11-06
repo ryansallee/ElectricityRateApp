@@ -26,21 +26,9 @@ namespace ElectricityRateApp.Data
             }
         }
 
-        public static void SaveRateComparison(string city1, string stateAbbreivation1, double rate1, double difference,
-            string city2, string stateAbbreviation2, double rate2)
+        public static void SaveRateComparison(RateComparisonResult searchResult)
         {
-            RateComparisonResult searchResult = new RateComparisonResult()
-            {
-                Time = DateTime.Now.ToString("MM/dd/yy HH:mm"),
-                City1 = city1,
-                StateAbbreviation1 = stateAbbreivation1,
-                Rate1 = rate1,
-                Difference = difference,
-                City2 = city2,
-                StateAbbreviation2 = stateAbbreviation2,
-                Rate2 = rate2
-            };
-
+            searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
             using (var context = new ElectricityRatesContext())
             {
                 context.RateComparisonResults.Add(searchResult);

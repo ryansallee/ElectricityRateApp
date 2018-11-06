@@ -81,78 +81,59 @@ namespace ElectricityRateApp.GetAndCalculate
 
         public static void CompareRates()
         {
+            RateComparisonResult rateComparison = new RateComparisonResult();
             Console.WriteLine("Please provide the name of the first city in your rate comparsion");
-            string city1 = Console.ReadLine().ToUpper();
+            rateComparison.City1 = Console.ReadLine().ToUpper();
             Console.WriteLine("Please provide the state abbreviation.");
-            string stateAbbreviation1 = Console.ReadLine().ToUpper();
+            rateComparison.StateAbbreviation1 = Console.ReadLine().ToUpper();
             Console.WriteLine("Please provide the name of the second city.");
-            string city2 = Console.ReadLine().ToUpper();
+            rateComparison.City2 = Console.ReadLine().ToUpper();
             Console.WriteLine("Please provide the state abbreviation.");
-            string stateAbbreviation2 = Console.ReadLine().ToUpper();
-            if (!SearchAndCalculateHelpers.CheckValidInput(city1, stateAbbreviation1, city2, stateAbbreviation2))
+            rateComparison.StateAbbreviation2 = Console.ReadLine().ToUpper();
+            if (!SearchAndCalculateHelpers.CheckValidInput(rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2))
                 return;
 
-            string zipCode1 = ZipCodeMethods.GetZipCode(city1, stateAbbreviation1).Result;
-            string zipCode2 = ZipCodeMethods.GetZipCode(city2, stateAbbreviation2).Result;
+            string zipCode1 = ZipCodeMethods.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
+            string zipCode2 = ZipCodeMethods.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
 
-            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode1, city1, stateAbbreviation1, 
-                    zipCode2, city2, stateAbbreviation2))
+            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1, 
+                    zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))
                 return;
 
             //TODO Get Rate Method
-            double rate1;
-            double rate2;
             using (var context = new ElectricityRatesContext())
             {
 
-                rate1 = context.PowerRates.Where(pr => pr.ZipCode == zipCode1)
+                rateComparison.Rate1 = context.PowerRates.Where(pr => pr.ZipCode == zipCode1)
                          .Select(pr => pr.ResidentialRate)
                          .DefaultIfEmpty(0)
                          .Sum();
 
-                rate2 = context.PowerRates.Where(pr => pr.ZipCode == zipCode2)
+                rateComparison.Rate2 = context.PowerRates.Where(pr => pr.ZipCode == zipCode2)
                          .Select(pr => pr.ResidentialRate)
                          .DefaultIfEmpty(0)
                          .Sum();
             }
 
-            //TODO Check if rate is 0 method?.
-            if (rate1 == 0 && rate2 == 0)
-            {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} and {2}, {3}. " +
-                   "We cannot calculate any rates.",
-                   city1, stateAbbreviation1, city2, stateAbbreviation2));
+            if (!SearchAndCalculateHelpers.CheckIfRateIs0(rateComparison))
                 return;
-            }
-            else if (rate1 == 0)
-            {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
-                    "and cannot compare the rates of {0}, {1} with {2}, {3}.",
-                    city1, stateAbbreviation1, city2, stateAbbreviation2));
-                return;
-            }
-            else if (rate2 == 0)
-            {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
-                   "and cannot compare the rates of {0}, {1} with {2}, {3}.",
-                   city2, stateAbbreviation2, city1, stateAbbreviation1));
-                return;
-            }
 
-            double difference = (rate1 - rate2) / rate2;
+             rateComparison.Difference = (rateComparison.Rate1 - rateComparison.Rate2) / rateComparison.Rate2;
             
-            if (rate1 > rate2)
+            if (rateComparison.Rate1 > rateComparison.Rate2)
             {
                 Console.WriteLine(String.Format("The rate in {0}, {1} is {2:P2} more than in {3}, {4}.",
-                    city1, stateAbbreviation1, Math.Abs(difference), city2, stateAbbreviation2));
+                    rateComparison.City1, rateComparison.StateAbbreviation1, Math.Abs(rateComparison.Difference), 
+                    rateComparison.City2, rateComparison.StateAbbreviation2));
                 
             }
-            else if (rate2 > rate1)
+            else if (rateComparison.Rate2 > rateComparison.Rate1)
             {
                 Console.WriteLine(String.Format("The rate in  {0}, {1} is {2:P2} less than in {3}, {4}.",
-                    city1, stateAbbreviation1, Math.Abs(difference), city2, stateAbbreviation2));
+                    rateComparison.City1, rateComparison.StateAbbreviation1, Math.Abs(rateComparison.Difference),
+                    rateComparison.City2, rateComparison.StateAbbreviation2));
             }
-            SaveSearchResults.SaveRateComparison(city1, stateAbbreviation1, rate1, difference, city2, stateAbbreviation2, rate2);
+            SaveSearchResults.SaveRateComparison(rateComparison);
         }         
         
     }
