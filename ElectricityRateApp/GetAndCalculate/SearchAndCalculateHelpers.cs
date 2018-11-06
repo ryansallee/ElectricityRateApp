@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ElectricityRateApp.Data;
+using ElectricityRateApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -118,6 +120,17 @@ namespace ElectricityRateApp.GetAndCalculate
                 cityExists = false;
             }
             return cityExists;
+        }
+
+        public static bool CheckIfRateIs0(ResidentialChargeResult chargeResult)
+        {
+            if(chargeResult.Rate == 0)
+            {
+                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", chargeResult.City, chargeResult.StateAbbreviation));
+                SaveSearchResults.SaveRateCalculation(chargeResult);
+                return false;
+            }
+            return true;
         }
     }
 }

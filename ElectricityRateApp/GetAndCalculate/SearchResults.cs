@@ -11,13 +11,8 @@ namespace ElectricityRateApp.GetAndCalculate
     {
         public static void GetProviderSearchHistory()
         {
-            Console.WriteLine("How many of the most recent electric utility provider search results would you like?");
-            bool success = int.TryParse(Console.ReadLine(), out int numberOfResults);
-            if(!success)
-            {
-                Console.WriteLine("Please provide a valid number. Please try again.");
+            if(!SearchResultsHelper.NumberOfResults(out int numberOfResults))
                 return;
-            }
             Console.WriteLine(string.Format("Here are the last {0} results", numberOfResults));
             var table = new ConsoleTable("Time", "City", "State", "Provider");
             using (var context = new ElectricityRatesContext())
@@ -36,14 +31,8 @@ namespace ElectricityRateApp.GetAndCalculate
 
         public static void GetChargeCalcuationHistory()
         {
-            Console.WriteLine("How many of the most recent electric residential charge calculations would you like?");
-            bool success = int.TryParse(Console.ReadLine(), out int numberOfResults);
-            if (!success)
-            {
-                Console.WriteLine("Please provide a valid number. Please try again.");
+            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults))
                 return;
-            }
-
             Console.WriteLine(string.Format("Here are the last {0} results:", numberOfResults));
             var table = new ConsoleTable("Time", "City", "State", "Rate", "Charge", "Usage(kWh)");
             using (var context = new ElectricityRatesContext())
@@ -63,16 +52,10 @@ namespace ElectricityRateApp.GetAndCalculate
 
         public static void GetRateComparisonHistory()
         {
-            Console.WriteLine("How many of the most recent rate comparisons would you like?");
-            bool success = int.TryParse(Console.ReadLine(), out int numberOfResults);
-            if(!success)
-            {
-                Console.WriteLine("Please provide a valid number. Please try again");
+            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults))
                 return;
-            }
-
             Console.WriteLine(string.Format("Here are the last {0} results:", numberOfResults));
-            Console.WriteLine("A negative Percetage in the Difference Column means the first city's rate is less");
+            Console.WriteLine("A negative percentage in the Difference Column means the first city's rate is less.");
             var table = new ConsoleTable("Time", "City 1", "State 1", "Rate 1", "City 2", "State 2", "Rate 2", "Difference");
             using (var context = new ElectricityRatesContext())
             {

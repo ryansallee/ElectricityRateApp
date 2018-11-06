@@ -66,6 +66,7 @@
     <Compile Include="Data\ZipCodeMethods.cs" />
     <Compile Include="GetAndCalculate\SearchAndCalculateHelpers.cs" />
     <Compile Include="GetAndCalculate\SearchResults.cs" />
+    <Compile Include="GetAndCalculate\SearchResultsHelper.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.Designer.cs">
       <DependentUpon>201810221640109_InitalMigration.cs</DependentUpon>
