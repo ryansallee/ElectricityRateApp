@@ -20,21 +20,27 @@ namespace ElectricityRateApp
                 {
                     case 1:
                         SearchAndCalculate.GetProviderName();
+                        Clear();
                         break;
                     case 2:
                         SearchAndCalculate.CalculateResidentialCharges();
+                        Clear();
                         break;
                     case 3:
                         SearchAndCalculate.CompareRates();
+                        Clear();
                         break;
                     case 4:
                         SearchResults.GetProviderSearchHistory();
+                        Clear();
                         break;
                     case 5:
                         SearchResults.GetChargeCalcuationHistory();
+                        Clear();
                         break;
                     case 6:
                         SearchResults.GetRateComparisonHistory();
+                        Clear();
                         break;
                     case 7:
                         break;
@@ -66,10 +72,17 @@ namespace ElectricityRateApp
             if (!success || option < 1 || option > 7)
             {
                 Console.WriteLine("You did not provide a valid option. Please try again");
-                Console.Clear();
+                Clear();
                 MainMenu();
             }
             return option;
+        }
+
+        static void Clear()
+        {
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }
