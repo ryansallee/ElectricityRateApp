@@ -6,7 +6,7 @@ namespace ElectricityRateApp.Data
 {
     public static class SaveSearchResults
     {
-        public static void SaveProviderResult(UtilitySearchResult searchResult)
+        public static void Save(UtilitySearchResult searchResult)
         {
             searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
             using (var context = new ElectricityRatesContext())
@@ -16,7 +16,7 @@ namespace ElectricityRateApp.Data
             }
         }
 
-        public static void SaveRateCalculation(ResidentialChargeResult searchResult)
+        public static void Save(ResidentialChargeResult searchResult)
         {
             searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
             using (var context = new ElectricityRatesContext())
@@ -26,7 +26,7 @@ namespace ElectricityRateApp.Data
             }
         }
 
-        public static void SaveRateComparison(RateComparisonResult searchResult)
+        public static void Save(RateComparisonResult searchResult)
         {
             searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
             using (var context = new ElectricityRatesContext())

@@ -28,12 +28,12 @@ namespace ElectricityRateApp.GetAndCalculate
             {
                 Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", utilitySearch.City, utilitySearch.StateAbbreviation);
                 utilitySearch.UtilityName = "No Provider Info Found";
-                SaveSearchResults.SaveProviderResult(utilitySearch);
+                SaveSearchResults.Save(utilitySearch);
             }
             else
             {
                 Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", utilitySearch.City, utilitySearch.StateAbbreviation, utilitySearch.UtilityName));
-                SaveSearchResults.SaveProviderResult(utilitySearch);
+                SaveSearchResults.Save(utilitySearch);
             }
         }
 
@@ -64,7 +64,7 @@ namespace ElectricityRateApp.GetAndCalculate
             if(!SearchAndCalculateHelpers.CheckIfRateIs0(chargeResult))
                 return;
             Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", chargeResult.Usage, chargeResult.Charge));
-            SaveSearchResults.SaveRateCalculation(chargeResult);
+            SaveSearchResults.Save(chargeResult);
         }
 
         public static void CompareRates()
@@ -108,7 +108,7 @@ namespace ElectricityRateApp.GetAndCalculate
                     rateComparison.City1, rateComparison.StateAbbreviation1, Math.Abs(rateComparison.Difference),
                     rateComparison.City2, rateComparison.StateAbbreviation2));
             }
-            SaveSearchResults.SaveRateComparison(rateComparison);
+            SaveSearchResults.Save(rateComparison);
         }         
         
     }
