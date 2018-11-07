@@ -7,11 +7,11 @@ using ConsoleTables;
 
 namespace ElectricityRateApp.GetAndCalculate
 {
-    public class SearchResults
+    public class GetSearchResults
     {
         public static void GetProviderSearchHistory()
         {
-            if(!SearchResultsHelper.NumberOfResults(out int numberOfResults))
+            if(!SearchResultsHelper.NumberOfResults(out int numberOfResults, "utility provider searches"))
                 return;
             Console.WriteLine(string.Format("Here are the last {0} results", numberOfResults));
             var table = new ConsoleTable("Time", "City", "State", "Provider");
@@ -22,7 +22,7 @@ namespace ElectricityRateApp.GetAndCalculate
                 
                 foreach (var result in results)
                 {      
-                    table.AddRow(result.Time, result.City, result.StateAbbreviation, result.ProviderName);
+                    table.AddRow(result.Time, result.City, result.StateAbbreviation, result.UtilityName);
                 }                
             }
             table.Write();
@@ -31,7 +31,7 @@ namespace ElectricityRateApp.GetAndCalculate
 
         public static void GetChargeCalcuationHistory()
         {
-            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults))
+            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "residential charge estimates"))
                 return;
             Console.WriteLine(string.Format("Here are the last {0} results:", numberOfResults));
             var table = new ConsoleTable("Time", "City", "State", "Rate", "Charge", "Usage(kWh)");
@@ -52,7 +52,7 @@ namespace ElectricityRateApp.GetAndCalculate
 
         public static void GetRateComparisonHistory()
         {
-            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults))
+            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "rate comparisons"))
                 return;
             Console.WriteLine(string.Format("Here are the last {0} results:", numberOfResults));
             Console.WriteLine("A negative percentage in the Difference Column means the first city's rate is less.");

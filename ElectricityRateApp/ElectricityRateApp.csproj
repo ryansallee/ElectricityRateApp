@@ -66,7 +66,7 @@
     <Compile Include="Data\SaveSearchResults.cs" />
     <Compile Include="Data\ZipCodeMethods.cs" />
     <Compile Include="GetAndCalculate\SearchAndCalculateHelpers.cs" />
-    <Compile Include="GetAndCalculate\SearchResults.cs" />
+    <Compile Include="GetAndCalculate\GetSearchResults.cs" />
     <Compile Include="GetAndCalculate\SearchResultsHelper.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.Designer.cs">
@@ -96,9 +96,13 @@
     <Compile Include="Migrations\201811012330216_AddedRateComparisonResult.Designer.cs">
       <DependentUpon>201811012330216_AddedRateComparisonResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811070049058_ChangedToUtilitySearcResult.cs" />
+    <Compile Include="Migrations\201811070049058_ChangedToUtilitySearcResult.Designer.cs">
+      <DependentUpon>201811070049058_ChangedToUtilitySearcResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PowerRate.cs" />
-    <Compile Include="Models\ProviderSearchResult.cs" />
+    <Compile Include="Models\UtilitySearchResult.cs" />
     <Compile Include="Models\RateComparisonResult.cs" />
     <Compile Include="Models\ResidentialChargeResult.cs" />
     <Compile Include="Models\ZipCode.cs" />
@@ -131,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811012330216_AddedRateComparisonResult.resx">
       <DependentUpon>201811012330216_AddedRateComparisonResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811070049058_ChangedToUtilitySearcResult.resx">
+      <DependentUpon>201811070049058_ChangedToUtilitySearcResult.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

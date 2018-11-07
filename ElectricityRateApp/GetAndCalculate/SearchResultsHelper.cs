@@ -8,9 +8,9 @@ namespace ElectricityRateApp.GetAndCalculate
 {
     public static class SearchResultsHelper
     {
-        public static bool NumberOfResults(out int numberofResults)
+        public static bool NumberOfResults(out int numberofResults, string resultName)
         {
-            Console.WriteLine("How many of the most recent electric utility provider search results would you like?");
+            Console.WriteLine(string.Format("How many of the most recent {0} would you like?", resultName));
             bool success = int.TryParse(Console.ReadLine(), out numberofResults);
             if (!success)
                 Console.WriteLine("Please provide a valid integer. Please try again");

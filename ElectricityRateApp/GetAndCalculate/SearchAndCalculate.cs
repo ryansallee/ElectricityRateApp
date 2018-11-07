@@ -9,36 +9,31 @@ namespace ElectricityRateApp.GetAndCalculate
     {        
         public static void GetProviderName()
         {
-            ProviderSearchResult providerSearch = new ProviderSearchResult();
-            Console.WriteLine("Please provide the name of the city for which you would like to find the Electric Utility Proivder.");
-            providerSearch.City = Console.ReadLine().ToUpper();
+            UtilitySearchResult utilitySearch = new UtilitySearchResult();
+            Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
+            utilitySearch.City = Console.ReadLine().ToUpper();
             Console.WriteLine("Please provide the state abbreviation.");
-            providerSearch.StateAbbreviation = Console.ReadLine().ToUpper();
-            if (!SearchAndCalculateHelpers.CheckValidInput(providerSearch.City, providerSearch.StateAbbreviation))
+            utilitySearch.StateAbbreviation = Console.ReadLine().ToUpper();
+            if (!SearchAndCalculateHelpers.CheckValidInput(utilitySearch.City, utilitySearch.StateAbbreviation))
                 return;
                         
-            string zipCode = ZipCodeMethods.GetZipCode(providerSearch.City, providerSearch.StateAbbreviation).Result;
-            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, providerSearch.City, providerSearch.StateAbbreviation))
+            string zipCode = ZipCodeMethods.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
+            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
                 return;
+            
+            utilitySearch.UtilityName = GetFromPowerRates.GetUtilityProviderName(zipCode);
 
-            //TODO Get provider method.
-           using (var context = new ElectricityRatesContext())
-            {
-                providerSearch.ProviderName = context.PowerRates.Where(pr => pr.ZipCode == zipCode)
-                                   .Select(pr => pr.UtilityName)
-                                   .FirstOrDefault();                
-            }
             //TODO Check if provider is null method?
-            if (providerSearch.ProviderName == null)
+            if (utilitySearch.UtilityName == null)
             {
-                Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", providerSearch.City, providerSearch.StateAbbreviation);
-                providerSearch.ProviderName = "No Provider Info Found";
-                SaveSearchResults.SaveProviderResult(providerSearch);
+                Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", utilitySearch.City, utilitySearch.StateAbbreviation);
+                utilitySearch.UtilityName = "No Provider Info Found";
+                SaveSearchResults.SaveProviderResult(utilitySearch);
             }
             else
             {
-                Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", providerSearch.City, providerSearch.StateAbbreviation, providerSearch.ProviderName));
-                SaveSearchResults.SaveProviderResult(providerSearch);
+                Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", utilitySearch.City, utilitySearch.StateAbbreviation, utilitySearch.UtilityName));
+                SaveSearchResults.SaveProviderResult(utilitySearch);
             }
         }
 
@@ -49,7 +44,7 @@ namespace ElectricityRateApp.GetAndCalculate
         public static void CalculateResidentialCharges()
         {
             ResidentialChargeResult chargeResult = new ResidentialChargeResult();
-            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based charges.");
+            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
             chargeResult.City = Console.ReadLine().ToUpper();
             Console.WriteLine("Please provide the state abbreviation.");
             chargeResult.StateAbbreviation = Console.ReadLine().ToUpper();
@@ -75,7 +70,7 @@ namespace ElectricityRateApp.GetAndCalculate
         public static void CompareRates()
         {
             RateComparisonResult rateComparison = new RateComparisonResult();
-            Console.WriteLine("Please provide the name of the first city in your rate comparsion");
+            Console.WriteLine("Please provide the name of the first city to compare rates between cities");
             rateComparison.City1 = Console.ReadLine().ToUpper();
             Console.WriteLine("Please provide the state abbreviation.");
             rateComparison.StateAbbreviation1 = Console.ReadLine().ToUpper();

@@ -31,15 +31,15 @@ namespace ElectricityRateApp
                         Clear();
                         break;
                     case 4:
-                        SearchResults.GetProviderSearchHistory();
+                        GetSearchResults.GetProviderSearchHistory();
                         Clear();
                         break;
                     case 5:
-                        SearchResults.GetChargeCalcuationHistory();
+                        GetSearchResults.GetChargeCalcuationHistory();
                         Clear();
                         break;
                     case 6:
-                        SearchResults.GetRateComparisonHistory();
+                        GetSearchResults.GetRateComparisonHistory();
                         Clear();
                         break;
                     case 7:
@@ -56,10 +56,9 @@ namespace ElectricityRateApp
         {
             Console.WriteLine();
             Console.WriteLine("\t Main Menu:");
-            Console.WriteLine("\t Please select from the following options below:");
             Console.WriteLine();
             Console.WriteLine("\t 1. \t Find an Electric Utlity Provider");
-            Console.WriteLine("\t 2. \t Calculate Estimated Electricity Charges for a City");
+            Console.WriteLine("\t 2. \t Calculate Estimated Residential Electricity Charges");
             Console.WriteLine("\t 3. \t Compare Eletricity Rates between Cities");
             Console.WriteLine("\t 4. \t Get Previous Electricity Provider Searches");
             Console.WriteLine("\t 5. \t Get Previous Electricity Charge Estimates");
@@ -67,6 +66,7 @@ namespace ElectricityRateApp
             Console.WriteLine("\t 7. \t Exit");
             Console.WriteLine();
 
+            Console.WriteLine("Please select an option:");
             var selection = Console.ReadLine();
             bool success = int.TryParse(selection, out int option);
             if (!success || option < 1 || option > 7)
@@ -80,7 +80,7 @@ namespace ElectricityRateApp
 
         static void Clear()
         {
-            Console.WriteLine("Press any key to continue.");
+            Console.WriteLine("Press any key to return to the Main Menu.");
             Console.ReadKey();
             Console.Clear();
         }

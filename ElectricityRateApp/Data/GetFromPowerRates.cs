@@ -18,5 +18,16 @@ namespace ElectricityRateApp.Data
                             .Sum();
             }
         }
+
+        public static string GetUtilityProviderName(string zipCode)
+        {
+            using (var context = new ElectricityRatesContext())
+            {
+                return context.PowerRates.Where(pr => pr.ZipCode == zipCode)
+                                       .Select(pr => pr.UtilityName)
+                                       .FirstOrDefault();
+            }
+        }
     }
+    
 }

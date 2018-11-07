@@ -6,7 +6,7 @@ namespace ElectricityRateApp.Data
 {
     public static class SaveSearchResults
     {
-        public static void SaveProviderResult(ProviderSearchResult searchResult)
+        public static void SaveProviderResult(UtilitySearchResult searchResult)
         {
             searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
             using (var context = new ElectricityRatesContext())
