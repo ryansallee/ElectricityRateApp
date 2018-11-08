@@ -1,6 +1,7 @@
 ﻿using ElectricityRateApp.Data;
 using System;
-using ElectricityRateApp.GetAndCalculate;
+using ElectricityRateApp.HelperMethods;
+using ElectricityRateApp.Models;
 
 namespace ElectricityRateApp
 {
@@ -19,27 +20,27 @@ namespace ElectricityRateApp
                 switch (menuOption)
                 {
                     case 1:
-                        SearchAndCalculate.GetProviderName();
+                        UtilitySearchResult.Get();
                         Clear();
                         break;
                     case 2:
-                        SearchAndCalculate.CalculateResidentialCharges();
+                        ResidentialChargeResult.Calculate();
                         Clear();
                         break;
                     case 3:
-                        SearchAndCalculate.CompareRates();
+                        RateComparisonResult.Compare();
                         Clear();
                         break;
                     case 4:
-                        GetSearchResults.GetProviderSearchHistory();
+                        UtilitySearchResult.GetHistory();
                         Clear();
                         break;
                     case 5:
-                        GetSearchResults.GetChargeCalcuationHistory();
+                        ResidentialChargeResult.GetHistory();
                         Clear();
                         break;
                     case 6:
-                        GetSearchResults.GetRateComparisonHistory();
+                        RateComparisonResult.GetHistory();
                         Clear();
                         break;
                     case 7:

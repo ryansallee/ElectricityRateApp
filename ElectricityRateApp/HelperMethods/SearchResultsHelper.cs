@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectricityRateApp.GetAndCalculate
+namespace ElectricityRateApp.HelperMethods
 {
     public static class SearchResultsHelper
     {

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ConsoleTables;
+using ElectricityRateApp.Data;
+using ElectricityRateApp.HelperMethods;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +18,52 @@ namespace ElectricityRateApp.Models
         public double Rate { get; set; }
         public double Charge { get; set; }
         public int Usage { get; set; }
+
+        public static void Calculate()
+        {
+            ResidentialChargeResult chargeResult = new ResidentialChargeResult();
+            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
+            chargeResult.City = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            chargeResult.StateAbbreviation = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the usage in kilowatt hours(kWh). Most often your utility bill will have this information");
+            int.TryParse(Console.ReadLine(), out int usage);
+            if (!SearchAndCalculateHelpers.CheckValidInput(chargeResult.City, chargeResult.StateAbbreviation, usage))
+                return;
+            chargeResult.Usage = usage;
+
+            string zipCode = ZipCodeMethods.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
+            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
+                return;
+
+            chargeResult.Rate = GetFromPowerRates.GetRate(zipCode);
+            chargeResult.Charge = chargeResult.Rate * chargeResult.Usage;
+
+            if (!SearchAndCalculateHelpers.CheckIfRateIs0(chargeResult))
+                return;
+            Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", chargeResult.Usage, chargeResult.Charge));
+            SaveSearchResults.Save(chargeResult);
+        }
+
+        public static void GetHistory()
+        {
+            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "residential charge estimates"))
+                return;
+            Console.WriteLine(string.Format("Here are the last {0} results:", numberOfResults));
+            var table = new ConsoleTable("Time", "City", "State", "Rate", "Charge", "Usage(kWh)");
+            using (var context = new ElectricityRatesContext())
+            {
+                var results = context.ResidentialChargeResults.OrderByDescending(r => r.Id)
+                    .Take(numberOfResults);
+
+                foreach (var result in results)
+                {
+                    table.AddRow(result.Time, result.City, result.StateAbbreviation,
+                        string.Format("{0:C}", result.Rate), string.Format("{0:C}", result.Charge), result.Usage);
+                }
+            }
+            table.Write();
+            Console.WriteLine();
+        }
     }
 }

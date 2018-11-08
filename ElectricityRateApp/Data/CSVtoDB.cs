@@ -10,6 +10,7 @@ namespace ElectricityRateApp.Data
     public static class CSVtoDB
     {
         private static string _fileName = Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, "iouzipcodes2016.csv");
+        //Need to find way to check if Table contains any data
         private static bool dBCreated = Database.Exists("Rates");
            
         public static void CreateDatabase()
@@ -29,7 +30,6 @@ namespace ElectricityRateApp.Data
                     csv.ReadHeader();
                     while (csv.Read())
                     {
-                        //TO DO -> Account for zip codes with a leading 0.
                         string zipCode;
                         if (csv[0].Length < 5)
                         {

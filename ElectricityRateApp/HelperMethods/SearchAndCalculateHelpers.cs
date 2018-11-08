@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectricityRateApp.GetAndCalculate
+namespace ElectricityRateApp.HelperMethods
 {
     public static class SearchAndCalculateHelpers
     {
@@ -127,7 +127,7 @@ namespace ElectricityRateApp.GetAndCalculate
             if(chargeResult.Rate == 0)
             {
                 Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", chargeResult.City, chargeResult.StateAbbreviation));
-                SaveSearchResults.SaveRateCalculation(chargeResult);
+                SaveSearchResults.Save(chargeResult);
                 return false;
             }
             return true;
