@@ -4,55 +4,52 @@ using System.Data.Entity;
 using ElectricityRateApp.Models;
 using System.Data.Entity.Migrations;
 using CsvHelper;
+using System.Linq;
 
 namespace ElectricityRateApp.Data
 {
     public static class CSVtoDB
-    {
-        private static string _fileName = Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, "iouzipcodes2016.csv");
-        //Need to find way to check if Table contains any data
-        private static bool dBCreated = Database.Exists("Rates");
-           
-        public static void CreateDatabase()
+    {                    
+        public static void AddPowerRates()
         {
-            if(dBCreated)
-            {
-                return;
-            }
-            Console.WriteLine("creating database of electricity rates");
-            int i = 1;
-            using (var reader = new StreamReader(_fileName))
             using (var context = new ElectricityRatesContext())
             {
-                using (var csv = new CsvReader(reader))
+                if (context.PowerRates.Any())
+                    return;
+                Console.WriteLine("Adding electricty rate information to the database.");
+                string fileName = Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, "iouzipcodes2016.csv"); Console.WriteLine("creating database of electricity rates");
+                int i = 1;
+                using (var reader = new StreamReader(fileName))
                 {
-                    csv.Read();
-                    csv.ReadHeader();
-                    while (csv.Read())
+                    using (var csv = new CsvReader(reader))
                     {
-                        string zipCode;
-                        if (csv[0].Length < 5)
+                        csv.Read();
+                        csv.ReadHeader();
+                        while (csv.Read())
                         {
-                            zipCode = "0" + csv[0];
+                            string zipCode;
+                            if (csv[0].Length < 5)
+                            {
+                                zipCode = "0" + csv[0];
+                            }
+                            else
+                            { zipCode = csv[0]; }
+                            string utilityName = csv[2];
+                            double residentialRate;
+                            if (double.TryParse(csv[8], out residentialRate)) ;
+
+                            var rate = new PowerRate(zipCode, utilityName, residentialRate);
+                            context.PowerRates.Add(rate);
+
+                            Console.WriteLine(String.Format("Rate Added! Number{0}", i));
+                            i++;
+
                         }
-                        else
-                        { zipCode = csv[0]; }
-                        string utilityName = csv[2];
-                        double residentialRate;
-                        if (double.TryParse(csv[8], out residentialRate));
-
-                        var rate = new PowerRate(zipCode, utilityName, residentialRate);
-                        context.PowerRates.Add(rate);
-
-                        Console.WriteLine(String.Format("Rate Added! Number{0}", i));
-                        i++;
-
                     }
+                    context.SaveChanges();
                 }
-                context.SaveChanges();
+                Console.WriteLine("Electrity rate information added.");
             }
-            
-            Console.WriteLine("Database added");
         }
     }
 }
