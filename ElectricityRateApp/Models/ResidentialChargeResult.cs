@@ -22,24 +22,19 @@ namespace ElectricityRateApp.Models
         public static void Calculate()
         {
             ResidentialChargeResult chargeResult = new ResidentialChargeResult();
-            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
-            chargeResult.City = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            chargeResult.StateAbbreviation = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the usage in kilowatt hours(kWh). Most often your utility bill will have this information");
-            int.TryParse(Console.ReadLine(), out int usage);
-            if (!SearchAndCalculateHelpers.CheckValidInput(chargeResult.City, chargeResult.StateAbbreviation, usage))
+            GetAndCalculateHelpers.GetInput(chargeResult, out int usage);
+            if (!GetAndCalculateHelpers.CheckValidInput(chargeResult.City, chargeResult.StateAbbreviation, usage))
                 return;
             chargeResult.Usage = usage;
 
             string zipCode = ZipCodeMethods.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
-            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
+            if (!GetAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
                 return;
 
             chargeResult.Rate = GetFromPowerRates.GetRate(zipCode);
             chargeResult.Charge = chargeResult.Rate * chargeResult.Usage;
 
-            if (!SearchAndCalculateHelpers.CheckIfRateIs0(chargeResult))
+            if (!GetAndCalculateHelpers.CheckIfRateIs0(chargeResult))
                 return;
             Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", chargeResult.Usage, chargeResult.Charge));
             SaveSearchResults.Save(chargeResult);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.HelperMethods
 {
-    public static class SearchAndCalculateHelpers
+    public static class GetAndCalculateHelpers
     {
         public static bool CheckValidInput(string city, string stateAbbreviation)
         {
@@ -157,6 +157,39 @@ namespace ElectricityRateApp.HelperMethods
                 return false;
             }
             return true;
+        }
+
+        public static UtilitySearchResult GetInput(UtilitySearchResult utilitySearch)
+        {
+            Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
+            utilitySearch.City = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            utilitySearch.StateAbbreviation = Console.ReadLine().ToUpper();
+            return utilitySearch;
+        }
+
+        public static ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult, out int usage)
+        {
+            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
+            chargeResult.City = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            chargeResult.StateAbbreviation = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the usage in kilowatt hours(kWh). Most often your utility bill will have this information");
+            int.TryParse(Console.ReadLine(), out usage);
+            return chargeResult;
+        }
+
+        public static RateComparisonResult GetInput(RateComparisonResult rateComparison)
+        {
+            Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
+            rateComparison.City1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            rateComparison.StateAbbreviation1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the name of the second city.");
+            rateComparison.City2 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            rateComparison.StateAbbreviation2 = Console.ReadLine().ToUpper();
+            return rateComparison;
         }
     }
 }

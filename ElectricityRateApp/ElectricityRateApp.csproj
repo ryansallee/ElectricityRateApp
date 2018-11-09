@@ -64,7 +64,7 @@
     <Compile Include="Data\ElectricityRatesContext.cs" />
     <Compile Include="Data\SaveSearchResults.cs" />
     <Compile Include="Data\ZipCodeMethods.cs" />
-    <Compile Include="HelperMethods\SearchAndCalculateHelpers.cs" />
+    <Compile Include="HelperMethods\GetAndCalculateHelpers.cs" />
     <Compile Include="HelperMethods\SearchResultsHelper.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.Designer.cs">

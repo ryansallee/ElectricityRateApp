@@ -24,28 +24,21 @@ namespace ElectricityRateApp.Models
         public static void Compare()
         {
             RateComparisonResult rateComparison = new RateComparisonResult();
-            Console.WriteLine("Please provide the name of the first city to compare rates between cities");
-            rateComparison.City1 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            rateComparison.StateAbbreviation1 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the name of the second city.");
-            rateComparison.City2 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            rateComparison.StateAbbreviation2 = Console.ReadLine().ToUpper();
-            if (!SearchAndCalculateHelpers.CheckValidInput(rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2))
+            GetAndCalculateHelpers.GetInput(rateComparison);
+            if (!GetAndCalculateHelpers.CheckValidInput(rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2))
                 return;
 
             string zipCode1 = ZipCodeMethods.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
             string zipCode2 = ZipCodeMethods.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
 
-            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
+            if (!GetAndCalculateHelpers.DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
                     zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))
                 return;
 
             rateComparison.Rate1 = GetFromPowerRates.GetRate(zipCode1);
             rateComparison.Rate2 = GetFromPowerRates.GetRate(zipCode2);
 
-            if (!SearchAndCalculateHelpers.CheckIfRateIs0(rateComparison))
+            if (!GetAndCalculateHelpers.CheckIfRateIs0(rateComparison))
                 return;
 
             rateComparison.Difference = (rateComparison.Rate1 - rateComparison.Rate2) / rateComparison.Rate2;
@@ -61,6 +54,11 @@ namespace ElectricityRateApp.Models
                 Console.WriteLine(String.Format("The rate in  {0}, {1} is {2:P2} less than in {3}, {4}.",
                     rateComparison.City1, rateComparison.StateAbbreviation1, Math.Abs(rateComparison.Difference),
                     rateComparison.City2, rateComparison.StateAbbreviation2));
+            }
+            else
+            {
+                Console.WriteLine(string.Format("The rates in {0}, {1} and {3}, {4} are the same.", rateComparison.City1, rateComparison.StateAbbreviation1,
+                     rateComparison.City2, rateComparison.StateAbbreviation2));
             }
             SaveSearchResults.Save(rateComparison);
         }

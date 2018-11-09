@@ -20,31 +20,26 @@ namespace ElectricityRateApp.Models
         public static void Get()
         {
             UtilitySearchResult utilitySearch = new UtilitySearchResult();
-            Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
-            utilitySearch.City = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            utilitySearch.StateAbbreviation = Console.ReadLine().ToUpper();
-            if (!SearchAndCalculateHelpers.CheckValidInput(utilitySearch.City, utilitySearch.StateAbbreviation))
+            GetAndCalculateHelpers.GetInput(utilitySearch);
+            if (!GetAndCalculateHelpers.CheckValidInput(utilitySearch.City, utilitySearch.StateAbbreviation))
                 return;
 
             string zipCode = ZipCodeMethods.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
-            if (!SearchAndCalculateHelpers.DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
+            if (!GetAndCalculateHelpers.DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
                 return;
 
             utilitySearch.UtilityName = GetFromPowerRates.GetUtilityProviderName(zipCode);
 
-            //TODO Check if provider is null method?
             if (utilitySearch.UtilityName == null)
             {
                 Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", utilitySearch.City, utilitySearch.StateAbbreviation);
-                utilitySearch.UtilityName = "No Provider Info Found";
-                SaveSearchResults.Save(utilitySearch);
+                utilitySearch.UtilityName = "No Provider Info Found";                
             }
             else
             {
                 Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", utilitySearch.City, utilitySearch.StateAbbreviation, utilitySearch.UtilityName));
-                SaveSearchResults.Save(utilitySearch);
             }
+            SaveSearchResults.Save(utilitySearch);
         }
 
         public static void GetHistory()
