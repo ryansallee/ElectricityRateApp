@@ -12,6 +12,8 @@ namespace ElectricityRateApp.Data
     {                    
         public static void AddPowerRates()
         {
+            //Method to deserialize CSV file, to populate the properties of the PowerRate model
+            //when the class is instantiated, and to persist each instance to an EF code-first database.
             using (var context = new ElectricityRatesContext())
             {
                 if (context.PowerRates.Any())
@@ -38,7 +40,7 @@ namespace ElectricityRateApp.Data
                             double residentialRate;
                             if (double.TryParse(csv[8], out residentialRate)) ;
 
-                            var rate = new PowerRate(zipCode, utilityName, residentialRate);
+                            PowerRate rate = new PowerRate(zipCode, utilityName, residentialRate);
                             context.PowerRates.Add(rate);
 
                             Console.WriteLine(String.Format("Rate Added! Number{0}", i));

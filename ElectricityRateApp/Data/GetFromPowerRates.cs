@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Data
 {
+    //Methods to read from the PowerRates table by using LINQ queries.
+    //These methods prevent Long Method code smells for the Get methods in the RateCommparisonResult
+    //ResidentialChargeResult, and UtilitySearchResult Get methods.
     public static class GetFromPowerRates
     {
         public static double GetRate(string zipCode)

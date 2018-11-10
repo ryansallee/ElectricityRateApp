@@ -1,11 +1,12 @@
 ﻿using ElectricityRateApp.Models;
 using System;
-using ElectricityRateApp.Data;
 
 namespace ElectricityRateApp.Data
 {
     public static class SaveSearchResults
     {
+        //Overloaded Method to persist RateCommparisonResult ResidentialChargeResult, and UtilitySearchResults
+        //Static polymorphism
         public static void Save(UtilitySearchResult searchResult)
         {
             searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
