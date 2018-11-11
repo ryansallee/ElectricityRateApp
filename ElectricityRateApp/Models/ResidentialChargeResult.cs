@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Models
 {
+    //Class to model a ResidentialChargeResult.
     public class ResidentialChargeResult
     {
         public int Id { get; set; }
@@ -19,6 +20,9 @@ namespace ElectricityRateApp.Models
         public double Charge { get; set; }
         public int Usage { get; set; }
 
+        // Method using the methods of GetAndCalculateHelpers class to instantiate a ResidentialChargeResult,
+        // populate its properties(a estimation of eletricity usage charges), and persist that instance 
+        // of a ResidentialChargeResult to the database.
         public static void Calculate()
         {
             ResidentialChargeResult chargeResult = new ResidentialChargeResult();
@@ -27,7 +31,7 @@ namespace ElectricityRateApp.Models
                 return;
             chargeResult.Usage = usage;
 
-            string zipCode = GetZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
+            string zipCode = ZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
             if (!GetAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
                 return;
 
@@ -40,6 +44,8 @@ namespace ElectricityRateApp.Models
             SaveSearchResults.Save(chargeResult);
         }
 
+        // Method to get a user-specified length of IQueryable<ResidentialChargeResult> and displays them 
+        // to the console using the ConsoleTables NuGet extension.
         public static void GetHistory()
         {
             if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "residential charge estimates"))

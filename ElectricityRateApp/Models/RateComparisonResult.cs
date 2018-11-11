@@ -2,13 +2,11 @@
 using ElectricityRateApp.Data;
 using ElectricityRateApp.HelperMethods;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Models
 {
+    //Class to model a RateComparsionResult.
     public class RateComparisonResult
     {
         public int Id { get; set; }
@@ -21,6 +19,9 @@ namespace ElectricityRateApp.Models
         public string StateAbbreviation2 { get; set; }
         public double Rate2 { get; set; }
 
+        // Method using the methods of GetAndCalculateHelpers class to instantiate a RateComparsionResult,
+        // populate its properties(a comparison of rates between two cities), and persist that instance 
+        // of a RateComparsionResult to the database.
         public static void Compare()
         {
             RateComparisonResult rateComparison = new RateComparisonResult();
@@ -28,8 +29,8 @@ namespace ElectricityRateApp.Models
             if (!GetAndCalculateHelpers.CheckValidInput(rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2))
                 return;
 
-            string zipCode1 = GetZipCode.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
-            string zipCode2 = GetZipCode.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
+            string zipCode1 = ZipCode.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
+            string zipCode2 = ZipCode.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
 
             if (!GetAndCalculateHelpers.DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
                     zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))
@@ -63,6 +64,8 @@ namespace ElectricityRateApp.Models
             SaveSearchResults.Save(rateComparison);
         }
 
+        // Method to get a user-specified length IQueryable<RateComparisonResult> and displays them 
+        // to the console using the ConsoleTables NuGet extension.
         public static void GetHistory()
         {
             if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "rate comparisons"))

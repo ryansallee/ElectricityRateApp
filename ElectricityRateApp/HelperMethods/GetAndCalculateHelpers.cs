@@ -23,7 +23,9 @@ namespace ElectricityRateApp.HelperMethods
             utilitySearch.StateAbbreviation = Console.ReadLine().ToUpper();
             return utilitySearch;
         }
-
+        
+        // The usage parameter is a reference parameter that is returned to be checked by the appropriate
+        // overload of CheckValidInput.
         public static ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult, out int usage)
         {
             Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");

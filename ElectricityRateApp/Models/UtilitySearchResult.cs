@@ -9,6 +9,7 @@ using ConsoleTables;
 
 namespace ElectricityRateApp.Models
 {
+    //Class to model a UtilitySearchResult
     public class UtilitySearchResult
     {
         public int Id { get; set; }
@@ -17,6 +18,9 @@ namespace ElectricityRateApp.Models
         public string StateAbbreviation { get; set; }
         public string UtilityName { get; set; }
 
+        // Method using the methods of GetAndCalculateHelpers class to instantiate a UtilitySearchResult,
+        // populate its properties(the name of the electric utility provider for a city), and persist that instance 
+        // of a UtilitySearchResult to the database.
         public static void Get()
         {
             UtilitySearchResult utilitySearch = new UtilitySearchResult();
@@ -24,7 +28,7 @@ namespace ElectricityRateApp.Models
             if (!GetAndCalculateHelpers.CheckValidInput(utilitySearch.City, utilitySearch.StateAbbreviation))
                 return;
 
-            string zipCode = GetZipCode.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
+            string zipCode = ZipCode.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
             if (!GetAndCalculateHelpers.DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
                 return;
 
@@ -42,6 +46,8 @@ namespace ElectricityRateApp.Models
             SaveSearchResults.Save(utilitySearch);
         }
 
+        // Method to get a user-specified length of IQueryable<UtilitySearchResult> and displays them 
+        // to the console using the ConsoleTables NuGet extension.
         public static void GetHistory()
         {
             if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "utility provider searches"))
