@@ -6,7 +6,7 @@ using System;
 
 namespace ElectricityRateApp.Data
 {
-    public static class ZipCodeMethods
+    public static class GetZipCode
     {
         public static HttpClient HttpClient;
         //Method to populate the property of the ZipCode model. This method is a helper

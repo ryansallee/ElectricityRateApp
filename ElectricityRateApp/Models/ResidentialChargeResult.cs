@@ -27,7 +27,7 @@ namespace ElectricityRateApp.Models
                 return;
             chargeResult.Usage = usage;
 
-            string zipCode = ZipCodeMethods.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
+            string zipCode = GetZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
             if (!GetAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
                 return;
 

@@ -8,8 +8,49 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.HelperMethods
 {
+    // Overloaded methods to help the Get, Calculate, and Compare methods of the RateComparsionResult,
+    // ResidentialChargeResult, and UtilitySearch models. These methods help prevent long method smells.
     public static class GetAndCalculateHelpers
     {
+        //Overloaded method to help prompt and obtain the necessary input for a RateComparison Result,
+        //ResidentialChargeResult, and Utility Search Result.
+        //Static Polymorphism
+        public static UtilitySearchResult GetInput(UtilitySearchResult utilitySearch)
+        {
+            Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
+            utilitySearch.City = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            utilitySearch.StateAbbreviation = Console.ReadLine().ToUpper();
+            return utilitySearch;
+        }
+
+        public static ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult, out int usage)
+        {
+            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
+            chargeResult.City = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            chargeResult.StateAbbreviation = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the usage in kilowatt hours(kWh). Most often your utility bill will have this information");
+            int.TryParse(Console.ReadLine(), out usage);
+            return chargeResult;
+        }
+
+        public static RateComparisonResult GetInput(RateComparisonResult rateComparison)
+        {
+            Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
+            rateComparison.City1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            rateComparison.StateAbbreviation1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the name of the second city.");
+            rateComparison.City2 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            rateComparison.StateAbbreviation2 = Console.ReadLine().ToUpper();
+            return rateComparison;
+        }
+
+        // Overloaded method to check the inputs obtained in the GetInput method. If the input is
+        // not valid, the method returns false so that its parent method returns and executes no further.
+        // Static Polymorphism
         public static bool CheckValidInput(string city, string stateAbbreviation)
         {
             bool inputValid = true;
@@ -93,6 +134,9 @@ namespace ElectricityRateApp.HelperMethods
             return inputValid;
         }
 
+        // Overloaded method that returns false if GetZipCode returns null so that its parent method
+        // does not execute any further code.
+        // Static Polymorphism
         public static bool DoesCityExist(string zipCode, string city, string stateAbbreviation)
         {
             if(string.IsNullOrEmpty(zipCode))
@@ -122,6 +166,9 @@ namespace ElectricityRateApp.HelperMethods
             return cityExists;
         }
 
+        // Overloaded method that returns false if the Rate is 0 and prevents its parent method from executing
+        // further code.
+        // Static Polymorphism.
         public static bool CheckIfRateIs0(ResidentialChargeResult chargeResult)
         {
             if(chargeResult.Rate == 0)
@@ -159,37 +206,6 @@ namespace ElectricityRateApp.HelperMethods
             return true;
         }
 
-        public static UtilitySearchResult GetInput(UtilitySearchResult utilitySearch)
-        {
-            Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
-            utilitySearch.City = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            utilitySearch.StateAbbreviation = Console.ReadLine().ToUpper();
-            return utilitySearch;
-        }
 
-        public static ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult, out int usage)
-        {
-            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
-            chargeResult.City = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            chargeResult.StateAbbreviation = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the usage in kilowatt hours(kWh). Most often your utility bill will have this information");
-            int.TryParse(Console.ReadLine(), out usage);
-            return chargeResult;
-        }
-
-        public static RateComparisonResult GetInput(RateComparisonResult rateComparison)
-        {
-            Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
-            rateComparison.City1 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            rateComparison.StateAbbreviation1 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the name of the second city.");
-            rateComparison.City2 = Console.ReadLine().ToUpper();
-            Console.WriteLine("Please provide the state abbreviation.");
-            rateComparison.StateAbbreviation2 = Console.ReadLine().ToUpper();
-            return rateComparison;
-        }
     }
 }

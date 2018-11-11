@@ -28,8 +28,8 @@ namespace ElectricityRateApp.Models
             if (!GetAndCalculateHelpers.CheckValidInput(rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2))
                 return;
 
-            string zipCode1 = ZipCodeMethods.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
-            string zipCode2 = ZipCodeMethods.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
+            string zipCode1 = GetZipCode.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
+            string zipCode2 = GetZipCode.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
 
             if (!GetAndCalculateHelpers.DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
                     zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))
@@ -57,7 +57,7 @@ namespace ElectricityRateApp.Models
             }
             else
             {
-                Console.WriteLine(string.Format("The rates in {0}, {1} and {3}, {4} are the same.", rateComparison.City1, rateComparison.StateAbbreviation1,
+                Console.WriteLine(string.Format("The rates in {0}, {1} and {2}, {3} are the same.", rateComparison.City1, rateComparison.StateAbbreviation1,
                      rateComparison.City2, rateComparison.StateAbbreviation2));
             }
             SaveSearchResults.Save(rateComparison);
