@@ -45,7 +45,7 @@ namespace ElectricityRateApp.Data
 
                             if (i % 5000 == 0)
                             {
-                                Console.WriteLine("...");
+                                Console.WriteLine("Adding more rates.");
                             }
                             i++;
 
