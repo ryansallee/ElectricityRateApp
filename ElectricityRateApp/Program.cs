@@ -12,6 +12,7 @@ namespace ElectricityRateApp
             Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
             Console.WriteLine("Welcome to the Electricity Rate App.");
             CSVtoDB.AddPowerRates();
+            
 
             var menuOption = MainMenu();
 
@@ -50,7 +51,7 @@ namespace ElectricityRateApp
                 if (menuOption != 7)
                     menuOption = MainMenu();
             }
-
+            Console.WriteLine("Goodbye!");
         }
 
         static int MainMenu()

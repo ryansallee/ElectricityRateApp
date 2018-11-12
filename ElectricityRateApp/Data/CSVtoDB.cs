@@ -18,8 +18,8 @@ namespace ElectricityRateApp.Data
             {
                 if (context.PowerRates.Any())
                     return;
-                Console.WriteLine("Adding electricty rate information to the database.");
-                string fileName = Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, "iouzipcodes2016.csv"); Console.WriteLine("creating database of electricity rates");
+                Console.WriteLine("Adding electricty rate information to the database. This process may take a few minutes.");
+                string fileName = Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, "iouzipcodes2016.csv");
                 int i = 1;
                 using (var reader = new StreamReader(fileName))
                 {
@@ -43,7 +43,10 @@ namespace ElectricityRateApp.Data
                             PowerRate rate = new PowerRate(zipCode, utilityName, residentialRate);
                             context.PowerRates.Add(rate);
 
-                            Console.WriteLine(String.Format("Rate Added! Number{0}", i));
+                            if (i % 5000 == 0)
+                            {
+                                Console.WriteLine("...");
+                            }
                             i++;
 
                         }
@@ -51,6 +54,7 @@ namespace ElectricityRateApp.Data
                     context.SaveChanges();
                 }
                 Console.WriteLine("Electrity rate information added.");
+                
             }
         }
     }
