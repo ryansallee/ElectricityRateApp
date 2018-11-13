@@ -1,6 +1,6 @@
-#Electricity Rate App
+# Electricity Rate App
 
-##Purpose
+## Purpose
 The Electricity Rate App is a simple console app that allows a user to find the name
 of an electric utility provider, make a calculation of usage-based charges, or compare 
 electric utility rates between cities. In addition, the app persists these results to a database
