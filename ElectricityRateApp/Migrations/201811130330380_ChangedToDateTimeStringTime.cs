@@ -3,7 +3,7 @@ namespace ElectricityRateApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ChangedToUtilitySearcResult : DbMigration
+    public partial class ChangedToDateTimeStringTime : DbMigration
     {
         public override void Up()
         {
@@ -12,13 +12,15 @@ namespace ElectricityRateApp.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Time = c.String(),
+                        Time = c.DateTime(nullable: false),
                         City = c.String(),
                         StateAbbreviation = c.String(),
                         UtilityName = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
+            AlterColumn("dbo.RateComparisonResults", "Time", c => c.DateTime(nullable: false));
+            AlterColumn("dbo.ResidentialChargeResults", "Time", c => c.DateTime(nullable: false));
             DropTable("dbo.ProviderSearchResults");
         }
         
@@ -36,6 +38,8 @@ namespace ElectricityRateApp.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            AlterColumn("dbo.ResidentialChargeResults", "Time", c => c.String());
+            AlterColumn("dbo.RateComparisonResults", "Time", c => c.String());
             DropTable("dbo.UtilitySearchResults");
         }
     }

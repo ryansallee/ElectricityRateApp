@@ -10,7 +10,7 @@ namespace ElectricityRateApp.Models
     public class RateComparisonResult
     {
         public int Id { get; set; }
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public string City1 { get; set; }
         public string StateAbbreviation1 { get; set; }
         public double Rate1 { get; set; }
@@ -85,7 +85,7 @@ namespace ElectricityRateApp.Models
 
                 foreach (var result in results)
                 {
-                    table.AddRow(result.Time, result.City1, result.StateAbbreviation1, string.Format("{0:C}", result.Rate1),
+                    table.AddRow(result.Time.ToString(), result.City1, result.StateAbbreviation1, string.Format("{0:C}", result.Rate1),
                         result.City2, result.StateAbbreviation2, string.Format("{0:C}", result.Rate2), string.Format("{0:P2}", result.Difference));
                 }
                 Console.WriteLine(string.Format("Here are the last {0} result(s):", results.Count()));

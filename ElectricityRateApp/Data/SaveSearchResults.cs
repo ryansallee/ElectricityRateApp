@@ -9,17 +9,17 @@ namespace ElectricityRateApp.Data
         //Static polymorphism
         public static void Save(UtilitySearchResult searchResult)
         {
-            searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
+            searchResult.Time = DateTime.Now;
             using (var context = new ElectricityRatesContext())
             {
-                context.ProviderSearchResults.Add(searchResult);
+                context.UtilitySearchResults.Add(searchResult);
                 context.SaveChanges();
             }
         }
 
         public static void Save(ResidentialChargeResult searchResult)
         {
-            searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
+            searchResult.Time = DateTime.Now;
             using (var context = new ElectricityRatesContext())
             {
                 context.ResidentialChargeResults.Add(searchResult);
@@ -29,7 +29,7 @@ namespace ElectricityRateApp.Data
 
         public static void Save(RateComparisonResult searchResult)
         {
-            searchResult.Time = DateTime.Now.ToString("MM/dd/yy HH:mm");
+            searchResult.Time = DateTime.Now;
             using (var context = new ElectricityRatesContext())
             {
                 context.RateComparisonResults.Add(searchResult);

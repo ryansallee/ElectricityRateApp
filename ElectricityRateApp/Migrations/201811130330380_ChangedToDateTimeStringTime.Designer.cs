@@ -7,13 +7,13 @@ namespace ElectricityRateApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ChangedToUtilitySearcResult : IMigrationMetadata
+    public sealed partial class ChangedToDateTimeStringTime : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedToUtilitySearcResult));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedToDateTimeStringTime));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811070049058_ChangedToUtilitySearcResult"; }
+            get { return "201811130330380_ChangedToDateTimeStringTime"; }
         }
         
         string IMigrationMetadata.Source

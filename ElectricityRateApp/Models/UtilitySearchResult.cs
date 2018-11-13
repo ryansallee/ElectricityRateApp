@@ -13,7 +13,7 @@ namespace ElectricityRateApp.Models
     public class UtilitySearchResult
     {
         public int Id { get; set; }
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public string UtilityName { get; set; }
@@ -66,12 +66,12 @@ namespace ElectricityRateApp.Models
             var table = new ConsoleTable("Time", "City", "State", "Provider");
             using (var context = new ElectricityRatesContext())
             {
-                var results = context.ProviderSearchResults.OrderByDescending(r => r.Id)
+                var results = context.UtilitySearchResults.OrderByDescending(r => r.Id)
                     .Take(numberOfResults);
 
                 foreach (var result in results)
                 {
-                    table.AddRow(result.Time, result.City, result.StateAbbreviation, result.UtilityName);
+                    table.AddRow(result.Time.ToString(), result.City, result.StateAbbreviation, result.UtilityName);
                 }
                 Console.WriteLine(string.Format("Here are the last {0} result(s):", results.Count()));
             }

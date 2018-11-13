@@ -13,7 +13,7 @@ namespace ElectricityRateApp.Models
     public class ResidentialChargeResult
     {
         public int Id { get; set; }
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public double Rate { get; set; }
@@ -66,7 +66,7 @@ namespace ElectricityRateApp.Models
 
                 foreach (var result in results)
                 {
-                    table.AddRow(result.Time, result.City, result.StateAbbreviation,
+                    table.AddRow(result.Time.ToString(), result.City, result.StateAbbreviation,
                         string.Format("{0:C}", result.Rate), string.Format("{0:C}", result.Charge), result.Usage);
                 }
                 Console.WriteLine(string.Format("Here are the last {0} result(s):", results.Count()));

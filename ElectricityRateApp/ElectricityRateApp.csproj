@@ -93,9 +93,9 @@
     <Compile Include="Migrations\201811012330216_AddedRateComparisonResult.Designer.cs">
       <DependentUpon>201811012330216_AddedRateComparisonResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811070049058_ChangedToUtilitySearcResult.cs" />
-    <Compile Include="Migrations\201811070049058_ChangedToUtilitySearcResult.Designer.cs">
-      <DependentUpon>201811070049058_ChangedToUtilitySearcResult.cs</DependentUpon>
+    <Compile Include="Migrations\201811130330380_ChangedToDateTimeStringTime.cs" />
+    <Compile Include="Migrations\201811130330380_ChangedToDateTimeStringTime.Designer.cs">
+      <DependentUpon>201811130330380_ChangedToDateTimeStringTime.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PowerRate.cs" />
@@ -133,8 +133,8 @@
     <EmbeddedResource Include="Migrations\201811012330216_AddedRateComparisonResult.resx">
       <DependentUpon>201811012330216_AddedRateComparisonResult.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811070049058_ChangedToUtilitySearcResult.resx">
-      <DependentUpon>201811070049058_ChangedToUtilitySearcResult.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811130330380_ChangedToDateTimeStringTime.resx">
+      <DependentUpon>201811130330380_ChangedToDateTimeStringTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
