@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Data.Entity;
 using ElectricityRateApp.Models;
-using System.Data.Entity.Migrations;
 using CsvHelper;
 using System.Linq;
+using System.Diagnostics;
 
 namespace ElectricityRateApp.Data
 {
@@ -53,8 +52,7 @@ namespace ElectricityRateApp.Data
                     }
                     context.SaveChanges();
                 }
-                Console.WriteLine("Electrity rate information added.");
-                
+                Console.WriteLine("Electrity rate information added! Proceeding to the Main Menu.");
             }
         }
     }

@@ -23,27 +23,37 @@ namespace ElectricityRateApp.Models
         // of a UtilitySearchResult to the database.
         public static void Get()
         {
-            UtilitySearchResult utilitySearch = new UtilitySearchResult();
-            GetAndCalculateHelpers.GetInput(utilitySearch);
-            if (!GetAndCalculateHelpers.CheckValidInput(utilitySearch.City, utilitySearch.StateAbbreviation))
-                return;
-
-            string zipCode = ZipCode.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
-            if (!GetAndCalculateHelpers.DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
-                return;
-
-            utilitySearch.UtilityName = GetFromPowerRates.GetUtilityProviderName(zipCode);
-
-            if (utilitySearch.UtilityName == null)
+            try
             {
-                Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", utilitySearch.City, utilitySearch.StateAbbreviation);
-                utilitySearch.UtilityName = "No Provider Info Found";                
+                UtilitySearchResult utilitySearch = new UtilitySearchResult();
+                GetAndCalculateHelpers.GetInput(utilitySearch);
+                if (!GetAndCalculateHelpers.CheckValidInput(utilitySearch.City, utilitySearch.StateAbbreviation))
+                    return;
+
+                string zipCode = ZipCode.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
+
+                if (!GetAndCalculateHelpers.DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
+                    return;
+
+                utilitySearch.UtilityName = GetFromPowerRates.GetUtilityProviderName(zipCode);
+
+                if (utilitySearch.UtilityName == null)
+                {
+                    Console.WriteLine("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", utilitySearch.City, utilitySearch.StateAbbreviation);
+                    utilitySearch.UtilityName = "No Provider Info Found";
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", utilitySearch.City, utilitySearch.StateAbbreviation, utilitySearch.UtilityName));
+                }
+                SaveSearchResults.Save(utilitySearch);
             }
-            else
+            catch(System.Exception e)
             {
-                Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", utilitySearch.City, utilitySearch.StateAbbreviation, utilitySearch.UtilityName));
+                Console.WriteLine(e.InnerException.Message);
             }
-            SaveSearchResults.Save(utilitySearch);
+
+
         }
 
         // Method to get a user-specified length of IQueryable<UtilitySearchResult> and displays them 
@@ -52,7 +62,7 @@ namespace ElectricityRateApp.Models
         {
             if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "utility provider searches"))
                 return;
-            Console.WriteLine(string.Format("Here are the last {0} results", numberOfResults));
+
             var table = new ConsoleTable("Time", "City", "State", "Provider");
             using (var context = new ElectricityRatesContext())
             {
@@ -63,6 +73,7 @@ namespace ElectricityRateApp.Models
                 {
                     table.AddRow(result.Time, result.City, result.StateAbbreviation, result.UtilityName);
                 }
+                Console.WriteLine(string.Format("Here are the last {0} result(s):", results.Count()));
             }
             table.Write();
             Console.WriteLine();

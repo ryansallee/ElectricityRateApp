@@ -25,23 +25,30 @@ namespace ElectricityRateApp.Models
         // of a ResidentialChargeResult to the database.
         public static void Calculate()
         {
-            ResidentialChargeResult chargeResult = new ResidentialChargeResult();
-            GetAndCalculateHelpers.GetInput(chargeResult, out int usage);
-            if (!GetAndCalculateHelpers.CheckValidInput(chargeResult.City, chargeResult.StateAbbreviation, usage))
-                return;
-            chargeResult.Usage = usage;
+            try
+            {
+                ResidentialChargeResult chargeResult = new ResidentialChargeResult();
+                GetAndCalculateHelpers.GetInput(chargeResult, out int usage);
+                if (!GetAndCalculateHelpers.CheckValidInput(chargeResult.City, chargeResult.StateAbbreviation, usage))
+                    return;
+                chargeResult.Usage = usage;
 
-            string zipCode = ZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
-            if (!GetAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
-                return;
+                string zipCode = ZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
+                if (!GetAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
+                    return;
 
-            chargeResult.Rate = GetFromPowerRates.GetRate(zipCode);
-            chargeResult.Charge = chargeResult.Rate * chargeResult.Usage;
+                chargeResult.Rate = GetFromPowerRates.GetRate(zipCode);
+                chargeResult.Charge = chargeResult.Rate * chargeResult.Usage;
 
-            if (!GetAndCalculateHelpers.CheckIfRateIs0(chargeResult))
-                return;
-            Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", chargeResult.Usage, chargeResult.Charge));
-            SaveSearchResults.Save(chargeResult);
+                if (!GetAndCalculateHelpers.CheckIfRateIs0(chargeResult))
+                    return;
+                Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", chargeResult.Usage, chargeResult.Charge));
+                SaveSearchResults.Save(chargeResult);
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+            }
         }
 
         // Method to get a user-specified length of IQueryable<ResidentialChargeResult> and displays them 
@@ -50,7 +57,7 @@ namespace ElectricityRateApp.Models
         {
             if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "residential charge estimates"))
                 return;
-            Console.WriteLine(string.Format("Here are the last {0} results:", numberOfResults));
+            
             var table = new ConsoleTable("Time", "City", "State", "Rate", "Charge", "Usage(kWh)");
             using (var context = new ElectricityRatesContext())
             {
@@ -62,6 +69,7 @@ namespace ElectricityRateApp.Models
                     table.AddRow(result.Time, result.City, result.StateAbbreviation,
                         string.Format("{0:C}", result.Rate), string.Format("{0:C}", result.Charge), result.Usage);
                 }
+                Console.WriteLine(string.Format("Here are the last {0} result(s):", results.Count()));
             }
             table.Write();
             Console.WriteLine();
