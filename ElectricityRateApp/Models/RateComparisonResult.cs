@@ -7,7 +7,8 @@ using System.Linq;
 namespace ElectricityRateApp.Models
 {
     //Class to model a RateComparsionResult.
-    public class RateComparisonResult:AbstractResult<RateComparisonResult>
+    //Implements ICheckRate<T> interface as well as AbstractResult<T>
+    public class RateComparisonResult: AbstractResult<RateComparisonResult>, ICheckRate<RateComparisonResult>
     {
         public string City1 { get; set; }
         public string StateAbbreviation1 { get; set; }
@@ -17,9 +18,9 @@ namespace ElectricityRateApp.Models
         public string StateAbbreviation2 { get; set; }
         public double Rate2 { get; set; }
 
-        // Method using the methods of GetAndCalculateHelpers class to instantiate a RateComparsionResult,
-        // populate its properties(a comparison of rates between two cities), and persist that instance 
-        // of a RateComparsionResult to the database.
+        // Method using the methods of GetAndCalculateHelpers, implementations of the members of AbstractResult<ResidentialChargeResult> 
+        // and ICheckRate<T> to instantiate a RateComparsionResult, populate its properties(a comparison of rates between two cities), 
+        // and persist that instance of a RateComparsionResult to the database.
         public static void Compare()
         {
             try
@@ -39,7 +40,7 @@ namespace ElectricityRateApp.Models
                 rateComparison.Rate1 = GetFromPowerRates.GetRate(zipCode1);
                 rateComparison.Rate2 = GetFromPowerRates.GetRate(zipCode2);
 
-                if (!GetAndCalculateHelpers.CheckIfRateIs0(rateComparison))
+                if (!rateComparison.CheckIfRate0(rateComparison))
                     return;
 
                 rateComparison.Difference = (rateComparison.Rate1 - rateComparison.Rate2) / rateComparison.Rate2;
@@ -93,7 +94,7 @@ namespace ElectricityRateApp.Models
             Console.WriteLine();
         }
         
-
+        //Implementation of an abstract method.
         public override RateComparisonResult GetInput(RateComparisonResult rateComparison)
         {
             Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
@@ -107,7 +108,7 @@ namespace ElectricityRateApp.Models
             return rateComparison;
         }
 
-
+        //Implementation of an abstract method.
         public override bool CheckValidInput(RateComparisonResult rateComparison)
         {
             bool inputValid = true;
@@ -144,6 +145,7 @@ namespace ElectricityRateApp.Models
             return inputValid;
         }
         
+        //Implementation of an abstract method.
         public override void Save(RateComparisonResult rateComparison)
         {
             rateComparison.Time = DateTime.Now;
@@ -152,6 +154,33 @@ namespace ElectricityRateApp.Models
                 context.RateComparisonResults.Add(rateComparison);
                 context.SaveChanges();
             }
+        }
+
+        //Implementation of the ICheckRate<T> interface method.
+        public bool CheckIfRate0(RateComparisonResult rateComparison)
+        {
+            if (rateComparison.Rate1 == 0 && rateComparison.Rate2 == 0)
+            {
+                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} and {2}, {3}. " +
+                  "We cannot calculate any rates.",
+                  rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2));
+                return false;
+            }
+            else if (rateComparison.Rate1 == 0)
+            {
+                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
+                   "and cannot compare the rates of {0}, {1} with {2}, {3}.",
+                   rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2));
+                return false;
+            }
+            else if (rateComparison.Rate2 == 0)
+            {
+                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
+                    "and cannot compare the rates of {0}, {1} with {2}, {3}.",
+                    rateComparison.City2, rateComparison.StateAbbreviation2, rateComparison.City1, rateComparison.StateAbbreviation1));
+                return false;
+            }
+            return true;
         }
     }
 }

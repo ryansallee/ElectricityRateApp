@@ -7,18 +7,19 @@ using System.Linq;
 namespace ElectricityRateApp.Models
 {
     //Class to model a ResidentialChargeResult.
-    public class ResidentialChargeResult:AbstractResult<ResidentialChargeResult>
+    //Implements ICheckRate<T> interface as well as AbstractResult<T>
+    public class ResidentialChargeResult:AbstractResult<ResidentialChargeResult>, ICheckRate<ResidentialChargeResult>
     {
-
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public double Rate { get; set; }
         public double Charge { get; set; }
         public int Usage { get; set; }
 
-        // Method using the methods of GetAndCalculateHelpers class to instantiate a ResidentialChargeResult,
-        // populate its properties(a estimation of eletricity usage charges), and persist that instance 
-        // of a ResidentialChargeResult to the database.
+        // Method using the methods of GetAndCalculateHelpers, implementations of the members of AbstractResult<ResidentialChargeResult>
+        // and ICheckRate<T> to instantiate a ResidentialChargeResult, populate its properties
+        // (an estimation of eletricity usage charges), and persist that instance of a ResidentialChargeResult
+        // to the database.
         public static void Calculate()
         {
             try
@@ -35,7 +36,7 @@ namespace ElectricityRateApp.Models
                 chargeResult.Rate = GetFromPowerRates.GetRate(zipCode);
                 chargeResult.Charge = chargeResult.Rate * chargeResult.Usage;
 
-                if (!GetAndCalculateHelpers.CheckIfRateIs0(chargeResult))
+                if (!chargeResult.CheckIfRate0(chargeResult))
                     return;
                 Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", chargeResult.Usage, chargeResult.Charge));
                 chargeResult.Save(chargeResult);
@@ -70,6 +71,7 @@ namespace ElectricityRateApp.Models
             Console.WriteLine();
         }
 
+        //Implementation of abstract method.
         public override ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult)
         {
             Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
@@ -82,6 +84,7 @@ namespace ElectricityRateApp.Models
             return chargeResult;
         }
 
+        //Implementation of abstract method.
         public override bool CheckValidInput(ResidentialChargeResult chargeResult)
         {
             bool inputValid = true;
@@ -108,6 +111,7 @@ namespace ElectricityRateApp.Models
             return inputValid;
         }
 
+        //Implementation of abstract method.
         public override void Save(ResidentialChargeResult chargeResult)
         {
             chargeResult.Time = DateTime.Now;
@@ -116,6 +120,18 @@ namespace ElectricityRateApp.Models
                 context.ResidentialChargeResults.Add(chargeResult);
                 context.SaveChanges();
             }
+        }
+
+        //Implementation of the ICheckRate<T> interface method.
+        public bool CheckIfRate0(ResidentialChargeResult chargeResult)
+        {
+            if (chargeResult.Rate == 0)
+            {
+                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", chargeResult.City, chargeResult.StateAbbreviation));
+                chargeResult.Save(chargeResult);
+                return false;
+            }
+            return true;
         }
     }
 }

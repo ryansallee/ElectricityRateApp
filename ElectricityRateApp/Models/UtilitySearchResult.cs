@@ -6,17 +6,17 @@ using ConsoleTables;
 
 namespace ElectricityRateApp.Models
 {
-    //Class to model a UtilitySearchResult
+    //Class to model a UtilitySearchResult.
+    //Implements AbstractResult<T>.
     public class UtilitySearchResult : AbstractResult<UtilitySearchResult>
     {
-
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public string UtilityName { get; set; }
 
-        // Method using the methods of GetAndCalculateHelpers class to instantiate a UtilitySearchResult,
-        // populate its properties(the name of the electric utility provider for a city), and persist that instance 
-        // of a UtilitySearchResult to the database.
+        // Method using the methods of GetAndCalculateHelpers and implementations of the members of AbstractResult<T>
+        // to instantiate a UtilitySearchResult, populates its properties(the name of the electric utility provider for a city),  
+        // and persist that instance of a UtilitySearchResult to the database.
         public static void Get()
         {
             try
@@ -73,6 +73,7 @@ namespace ElectricityRateApp.Models
             Console.WriteLine();
         }
 
+        //Implementation of abstract method.
         public override UtilitySearchResult GetInput(UtilitySearchResult utilitySearch)
         {
             Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
@@ -82,6 +83,7 @@ namespace ElectricityRateApp.Models
             return utilitySearch;
         }
 
+        //Implementation of abstract method.
         public override bool CheckValidInput(UtilitySearchResult utilitySearch)
         {
             bool inputValid = true;
@@ -103,6 +105,7 @@ namespace ElectricityRateApp.Models
             return inputValid;
         }
 
+        //Implementation of abstract method.
         public override void Save(UtilitySearchResult utilitySearch)
         {
             utilitySearch.Time = DateTime.Now;

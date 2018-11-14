@@ -40,47 +40,6 @@ namespace ElectricityRateApp.HelperMethods
             }
             return cityExists;
         }
-
-        // Overloaded method that returns false if the Rate is 0 and prevents its parent method from executing
-        // further code.
-        // Static Polymorphism.
-        public static bool CheckIfRateIs0(ResidentialChargeResult chargeResult)
-        {
-            if(chargeResult.Rate == 0)
-            {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1}.", chargeResult.City, chargeResult.StateAbbreviation));
-                chargeResult.Save(chargeResult);
-                return false;
-            }
-            return true;
-        }
-
-        public static bool CheckIfRateIs0(RateComparisonResult rateComparison)
-        {
-            if(rateComparison.Rate1 == 0 && rateComparison.Rate2 == 0)
-            {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} and {2}, {3}. " +
-                  "We cannot calculate any rates.", 
-                  rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2));
-                return false;
-            }
-            else if(rateComparison.Rate1 == 0)
-            {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
-                   "and cannot compare the rates of {0}, {1} with {2}, {3}.", 
-                   rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2));
-                return false;
-            }
-            else if (rateComparison.Rate2 == 0)
-            {
-                Console.WriteLine(string.Format("Unfortunately, we do not have any information on electric utility providers in {0}, {1} " +
-                    "and cannot compare the rates of {0}, {1} with {2}, {3}.",
-                    rateComparison.City2, rateComparison.StateAbbreviation2, rateComparison.City1, rateComparison.StateAbbreviation1));
-                return false;
-            }
-            return true;
-        }
-
-
+              
     }
 }

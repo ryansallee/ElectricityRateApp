@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AbstractResult.cs" />
+    <Compile Include="Models\ICheckRate.cs" />
     <Compile Include="Models\PowerRate.cs" />
     <Compile Include="Models\UtilitySearchResult.cs" />
     <Compile Include="Models\RateComparisonResult.cs" />
