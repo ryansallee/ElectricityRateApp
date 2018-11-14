@@ -3,6 +3,7 @@
 namespace ElectricityRateApp.Models
 {
     //Abstraction
+    //When the class is inherited and implemented it must take a type.
     public abstract class AbstractResult<T>
     {
         //Both of these properties are shared amongst RateComparsionResult, ResidentialChargeResult
