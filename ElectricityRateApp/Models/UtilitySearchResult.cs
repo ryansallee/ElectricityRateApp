@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ElectricityRateApp.HelperMethods;
 using ElectricityRateApp.Data;
 using ConsoleTables;
@@ -10,10 +7,9 @@ using ConsoleTables;
 namespace ElectricityRateApp.Models
 {
     //Class to model a UtilitySearchResult
-    public class UtilitySearchResult
+    public class UtilitySearchResult : AbstractResult<UtilitySearchResult>
     {
-        public int Id { get; set; }
-        public DateTime Time { get; set; }
+
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public string UtilityName { get; set; }
@@ -26,8 +22,8 @@ namespace ElectricityRateApp.Models
             try
             {
                 UtilitySearchResult utilitySearch = new UtilitySearchResult();
-                GetAndCalculateHelpers.GetInput(utilitySearch);
-                if (!GetAndCalculateHelpers.CheckValidInput(utilitySearch.City, utilitySearch.StateAbbreviation))
+                utilitySearch.GetInput(utilitySearch);
+                if (!utilitySearch.CheckValidInput(utilitySearch))
                     return;
 
                 string zipCode = ZipCode.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
@@ -46,14 +42,12 @@ namespace ElectricityRateApp.Models
                 {
                     Console.WriteLine(string.Format("The electric utility provider in {0}, {1} is {2}.", utilitySearch.City, utilitySearch.StateAbbreviation, utilitySearch.UtilityName));
                 }
-                SaveSearchResults.Save(utilitySearch);
+                utilitySearch.Save(utilitySearch);
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 Console.WriteLine(e.InnerException.Message);
             }
-
-
         }
 
         // Method to get a user-specified length of IQueryable<UtilitySearchResult> and displays them 
@@ -77,6 +71,46 @@ namespace ElectricityRateApp.Models
             }
             table.Write();
             Console.WriteLine();
+        }
+
+        public override UtilitySearchResult GetInput(UtilitySearchResult utilitySearch)
+        {
+            Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
+            utilitySearch.City = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            utilitySearch.StateAbbreviation = Console.ReadLine().ToUpper();
+            return utilitySearch;
+        }
+
+        public override bool CheckValidInput(UtilitySearchResult utilitySearch)
+        {
+            bool inputValid = true;
+            if (string.IsNullOrEmpty(utilitySearch.City))
+            {
+                Console.WriteLine("A city was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (string.IsNullOrEmpty(utilitySearch.StateAbbreviation))
+            {
+                Console.WriteLine("A state abbreviation was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (utilitySearch.StateAbbreviation.Length != 2 && utilitySearch.StateAbbreviation.Length > 0)
+            {
+                Console.WriteLine("A valid state abbreviation is 2 letters long. Please try again.");
+                inputValid = false;
+            }
+            return inputValid;
+        }
+
+        public override void Save(UtilitySearchResult utilitySearch)
+        {
+            utilitySearch.Time = DateTime.Now;
+            using (var context = new ElectricityRatesContext())
+            {
+                context.UtilitySearchResults.Add(utilitySearch);
+                context.SaveChanges();
+            }
         }
     }
 }

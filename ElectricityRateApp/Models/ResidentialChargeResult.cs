@@ -2,18 +2,14 @@
 using ElectricityRateApp.Data;
 using ElectricityRateApp.HelperMethods;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Models
 {
     //Class to model a ResidentialChargeResult.
-    public class ResidentialChargeResult
+    public class ResidentialChargeResult:AbstractResult<ResidentialChargeResult>
     {
-        public int Id { get; set; }
-        public DateTime Time { get; set; }
+
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public double Rate { get; set; }
@@ -28,10 +24,9 @@ namespace ElectricityRateApp.Models
             try
             {
                 ResidentialChargeResult chargeResult = new ResidentialChargeResult();
-                GetAndCalculateHelpers.GetInput(chargeResult, out int usage);
-                if (!GetAndCalculateHelpers.CheckValidInput(chargeResult.City, chargeResult.StateAbbreviation, usage))
-                    return;
-                chargeResult.Usage = usage;
+                chargeResult.GetInput(chargeResult);
+                if (!chargeResult.CheckValidInput(chargeResult))
+                    return;                
 
                 string zipCode = ZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
                 if (!GetAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
@@ -43,7 +38,7 @@ namespace ElectricityRateApp.Models
                 if (!GetAndCalculateHelpers.CheckIfRateIs0(chargeResult))
                     return;
                 Console.WriteLine(string.Format("Your estimated non-fixed charges for {0} kilowatt hours is {1:C}!", chargeResult.Usage, chargeResult.Charge));
-                SaveSearchResults.Save(chargeResult);
+                chargeResult.Save(chargeResult);
             }
             catch (System.Exception e)
             {
@@ -73,6 +68,54 @@ namespace ElectricityRateApp.Models
             }
             table.Write();
             Console.WriteLine();
+        }
+
+        public override ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult)
+        {
+            Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
+            chargeResult.City = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            chargeResult.StateAbbreviation = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the usage in kilowatt hours(kWh). Most often your utility bill will have this information");
+            int.TryParse(Console.ReadLine(), out int usage);
+            chargeResult.Usage = usage;
+            return chargeResult;
+        }
+
+        public override bool CheckValidInput(ResidentialChargeResult chargeResult)
+        {
+            bool inputValid = true;
+            if (string.IsNullOrEmpty(chargeResult.City))
+            {
+                Console.WriteLine("A city was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (string.IsNullOrEmpty(chargeResult.StateAbbreviation))
+            {
+                Console.WriteLine("A state abbreviation was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (chargeResult.StateAbbreviation.Length != 2 && chargeResult.StateAbbreviation.Length > 0)
+            {
+                Console.WriteLine("A valid state abbreviation is 2 letters long. Please try again.");
+                inputValid = false;
+            }
+            if (chargeResult.Usage == 0)
+            {
+                Console.WriteLine("The usage was not provided or invalid. Estimated charges cannot be provided. Please try again");
+                inputValid = false;
+            }
+            return inputValid;
+        }
+
+        public override void Save(ResidentialChargeResult chargeResult)
+        {
+            chargeResult.Time = DateTime.Now;
+            using (var context = new ElectricityRatesContext())
+            {
+                context.ResidentialChargeResults.Add(chargeResult);
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -7,10 +7,8 @@ using System.Linq;
 namespace ElectricityRateApp.Models
 {
     //Class to model a RateComparsionResult.
-    public class RateComparisonResult
+    public class RateComparisonResult:AbstractResult<RateComparisonResult>
     {
-        public int Id { get; set; }
-        public DateTime Time { get; set; }
         public string City1 { get; set; }
         public string StateAbbreviation1 { get; set; }
         public double Rate1 { get; set; }
@@ -27,8 +25,8 @@ namespace ElectricityRateApp.Models
             try
             {
                 RateComparisonResult rateComparison = new RateComparisonResult();
-                GetAndCalculateHelpers.GetInput(rateComparison);
-                if (!GetAndCalculateHelpers.CheckValidInput(rateComparison.City1, rateComparison.StateAbbreviation1, rateComparison.City2, rateComparison.StateAbbreviation2))
+                rateComparison.GetInput(rateComparison);
+                if (!rateComparison.CheckValidInput(rateComparison))
                     return;
 
                 string zipCode1 = ZipCode.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
@@ -63,7 +61,7 @@ namespace ElectricityRateApp.Models
                     Console.WriteLine(string.Format("The rates in {0}, {1} and {2}, {3} are the same.", rateComparison.City1, rateComparison.StateAbbreviation1,
                          rateComparison.City2, rateComparison.StateAbbreviation2));
                 }
-                SaveSearchResults.Save(rateComparison);
+               rateComparison.Save(rateComparison);
             }
             catch (SystemException e)
             {
@@ -93,6 +91,67 @@ namespace ElectricityRateApp.Models
             }
             table.Write();
             Console.WriteLine();
+        }
+        
+
+        public override RateComparisonResult GetInput(RateComparisonResult rateComparison)
+        {
+            Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
+            rateComparison.City1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            rateComparison.StateAbbreviation1 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the name of the second city.");
+            rateComparison.City2 = Console.ReadLine().ToUpper();
+            Console.WriteLine("Please provide the state abbreviation.");
+            rateComparison.StateAbbreviation2 = Console.ReadLine().ToUpper();
+            return rateComparison;
+        }
+
+
+        public override bool CheckValidInput(RateComparisonResult rateComparison)
+        {
+            bool inputValid = true;
+            if (string.IsNullOrEmpty(rateComparison.City1))
+            {
+                Console.WriteLine("The first city was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (string.IsNullOrEmpty(rateComparison.StateAbbreviation1))
+            {
+                Console.WriteLine("The first state abbreviation was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (rateComparison.StateAbbreviation1.Length != 2 && rateComparison.StateAbbreviation1.Length > 0)
+            {
+                Console.WriteLine("A valid state abbreviation was not proivded for the first state. A valid state abbreviation is 2 letters long. Please try again.");
+                inputValid = false;
+            }
+            if (string.IsNullOrEmpty(rateComparison.City2))
+            {
+                Console.WriteLine("The second city was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (string.IsNullOrEmpty(rateComparison.StateAbbreviation2))
+            {
+                Console.WriteLine("The second state abbreviation was not provided. Please try again.");
+                inputValid = false;
+            }
+            if (rateComparison.StateAbbreviation2.Length != 2 && rateComparison.StateAbbreviation2.Length > 0)
+            {
+                Console.WriteLine("A valid state abbreviation was not proivded for the second state. A valid state abbreviation is 2 letters long. Please try again.");
+                inputValid = false;
+            }
+            return inputValid;
+        }
+        
+        public override void Save(RateComparisonResult rateComparison)
+        {
+            rateComparison.Time = DateTime.Now;
+            using (var context = new ElectricityRatesContext())
+            {
+                context.RateComparisonResults.Add(rateComparison);
+                context.SaveChanges();
+            }
         }
     }
 }

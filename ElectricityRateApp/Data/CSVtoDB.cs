@@ -3,7 +3,6 @@ using System.IO;
 using ElectricityRateApp.Models;
 using CsvHelper;
 using System.Linq;
-using System.Diagnostics;
 
 namespace ElectricityRateApp.Data
 {
@@ -12,7 +11,8 @@ namespace ElectricityRateApp.Data
         public static void AddPowerRates()
         {
             //Method to deserialize CSV file, to populate the properties of the PowerRate model
-            //when the class is instantiated, and to persist each instance to an EF code-first database.
+            //when the class is instantiated, and to persist each instance to the EF code-first table PowerRates
+            //in the Rates database.
             using (var context = new ElectricityRatesContext())
             {
                 if (context.PowerRates.Any())

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ElectricityRateApp.Models
+﻿namespace ElectricityRateApp.Models
 {
     // Class to model PowerRates that are deserialized from the iouzipcodes2016 CSV.
     // Private set is used as an example of encapsulation(but this is an example of
