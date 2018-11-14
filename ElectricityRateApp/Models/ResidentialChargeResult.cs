@@ -50,7 +50,7 @@ namespace ElectricityRateApp.Models
         // to the console using the ConsoleTables NuGet extension.
         public static void GetHistory()
         {
-            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "residential charge estimates"))
+            if (!NumberOfResults(out int numberOfResults, "residential charge estimates"))
                 return;
             
             var table = new ConsoleTable("Time", "City", "State", "Rate", "Charge", "Usage(kWh)");

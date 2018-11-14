@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Models
 {
+    //Abstraction
     public abstract class AbstractResult<T>
     {
+        //Both of these properties are shared amongst RateComparsionResult, ResidentialChargeResult
         public int Id { get; set; }
         public DateTime Time { get; set; }
 
@@ -22,6 +24,18 @@ namespace ElectricityRateApp.Models
         //Abstract method to persist RateCommparisonResult ResidentialChargeResult, and UtilitySearchResults
         public abstract void Save(T t);
 
-        
+        // Method to help the GetHistory methods of the RateComparisonResult, ResidentialChargeResult,
+        // and UtilitySearchResult models the the number of previous results. It also checks
+        // to make sure that the input given is valid. If the input is not valid, the method
+        // returns false so that the GetHistory method does not execute further code.
+        public static bool NumberOfResults(out int numberofResults, string resultName)
+        {
+            Console.WriteLine(string.Format("How many of the most recent {0} would you like?", resultName));
+            bool success = int.TryParse(Console.ReadLine(), out numberofResults);
+            if (!success)
+                Console.WriteLine("Please provide a valid integer. Please try again");
+            return success;
+        }
+
     }
 }

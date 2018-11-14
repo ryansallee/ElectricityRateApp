@@ -37,7 +37,7 @@ namespace ElectricityRateApp.Data
                             { zipCode = csv[0]; }
                             string utilityName = csv[2];
                             double residentialRate;
-                            if (double.TryParse(csv[8], out residentialRate)) ;
+                            if (double.TryParse(csv[8], out residentialRate));
 
                             PowerRate rate = new PowerRate(zipCode, utilityName, residentialRate);
                             context.PowerRates.Add(rate);
@@ -47,7 +47,6 @@ namespace ElectricityRateApp.Data
                                 Console.WriteLine("Adding more rates.");
                             }
                             i++;
-
                         }
                     }
                     context.SaveChanges();

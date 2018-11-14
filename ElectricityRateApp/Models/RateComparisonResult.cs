@@ -73,7 +73,7 @@ namespace ElectricityRateApp.Models
         // to the console using the ConsoleTables NuGet extension.
         public static void GetHistory()
         {
-            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "rate comparisons"))
+            if (!NumberOfResults(out int numberOfResults, "rate comparisons"))
                 return;
             var table = new ConsoleTable("Time", "City 1", "State 1", "Rate 1", "City 2", "State 2", "Rate 2", "Difference");
             using (var context = new ElectricityRatesContext())

@@ -54,7 +54,7 @@ namespace ElectricityRateApp.Models
         // to the console using the ConsoleTables NuGet extension.
         public static void GetHistory()
         {
-            if (!SearchResultsHelper.NumberOfResults(out int numberOfResults, "utility provider searches"))
+            if (!NumberOfResults(out int numberOfResults, "utility provider searches"))
                 return;
 
             var table = new ConsoleTable("Time", "City", "State", "Provider");
