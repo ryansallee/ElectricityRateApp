@@ -54,6 +54,40 @@ namespace ElectricityRateApp.Migrations
 
             context.UtilitySearchResults.AddOrUpdate(utilSearch1, utilSearch2, utilSearch3, utilSearch4);
 
+            var chargeResult1 = new ResidentialChargeResult()
+            {
+                Id = 1,
+                Time = DateTime.Now,
+                City = "ERIE",
+                StateAbbreviation = "PA",
+                Rate = 0.221704144,
+                Charge = 221.70414399999999,
+                Usage = 1000
+            };
+
+            var chargeResult2 = new ResidentialChargeResult()
+            {
+                Id = 2,
+                Time = DateTime.Now,
+                City = "LEXINGTON",
+                StateAbbreviation = "KY",
+                Rate = 0.098671037,
+                Charge = 98.671037,
+                Usage = 1000
+            };
+
+            var chargeResult3 = new ResidentialChargeResult()
+            {
+                Id = 3,
+                Time = DateTime.Now,
+                City = "LOUISVILLE",
+                StateAbbreviation = "KY",
+                Rate = 0.104106287,
+                Charge = 145.7488018,
+                Usage = 1400
+            };
+
+            context.ResidentialChargeResults.AddOrUpdate(chargeResult1, chargeResult2, chargeResult3);
         }
     }
 }
