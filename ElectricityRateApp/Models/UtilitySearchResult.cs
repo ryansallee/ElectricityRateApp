@@ -7,7 +7,7 @@ using ConsoleTables;
 namespace ElectricityRateApp.Models
 {
     //Class to model a UtilitySearchResult.
-    //Implements AbstractResult<T>.
+    //Inherits and implements AbstractResult<T>.
     public class UtilitySearchResult : AbstractResult<UtilitySearchResult>
     {
         public string City { get; set; }

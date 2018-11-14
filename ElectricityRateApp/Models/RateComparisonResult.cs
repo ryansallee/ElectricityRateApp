@@ -7,7 +7,7 @@ using System.Linq;
 namespace ElectricityRateApp.Models
 {
     //Class to model a RateComparsionResult.
-    //Implements ICheckRate<T> interface as well as AbstractResult<T>
+    //Implements ICheckRate<T> interface as well as inherits and implements AbstractResult<T>
     public class RateComparisonResult: AbstractResult<RateComparisonResult>, ICheckRate<RateComparisonResult>
     {
         public string City1 { get; set; }
