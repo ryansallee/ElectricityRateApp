@@ -1,6 +1,6 @@
 ﻿using ElectricityRateApp.Data;
 using System;
-using ElectricityRateApp.HelperMethods;
+
 using ElectricityRateApp.Models;
 
 namespace ElectricityRateApp
@@ -21,7 +21,8 @@ namespace ElectricityRateApp
                 switch (menuOption)
                 {
                     case 1:
-                        UtilitySearchResult.Get();
+                        UtilitySearchResult utilitySearch = new UtilitySearchResult();
+                        utilitySearch.Get(utilitySearch);
                         Clear();
                         break;
                     case 2:
@@ -30,7 +31,8 @@ namespace ElectricityRateApp
                         Clear();
                         break;
                     case 3:
-                        RateComparisonResult.Compare();
+                        RateComparisonResult rateComparison = new RateComparisonResult();
+                        rateComparison.Compare(rateComparison);
                         Clear();
                         break;
                     case 4:

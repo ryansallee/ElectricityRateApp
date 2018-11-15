@@ -28,7 +28,7 @@ namespace ElectricityRateApp.Models
                     return;                
 
                 string zipCode = ZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
-                if (!GetAndCalculateHelpers.DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
+                if (!DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
                     return;
 
                 chargeResult.Rate = chargeResult.GetRate(zipCode);
@@ -70,7 +70,7 @@ namespace ElectricityRateApp.Models
         }
 
         //Implementation of abstract method.
-        public override ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult)
+        protected override ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult)
         {
             Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
             chargeResult.City = Console.ReadLine().ToUpper();
@@ -83,7 +83,7 @@ namespace ElectricityRateApp.Models
         }
 
         //Implementation of abstract method.
-        public override bool CheckValidInput(ResidentialChargeResult chargeResult)
+        protected override bool CheckValidInput(ResidentialChargeResult chargeResult)
         {
             bool inputValid = true;
             if (string.IsNullOrEmpty(chargeResult.City))
@@ -110,7 +110,7 @@ namespace ElectricityRateApp.Models
         }
 
         //Implementation of abstract method.
-        public override void Save(ResidentialChargeResult chargeResult)
+        protected override void Save(ResidentialChargeResult chargeResult)
         {
             chargeResult.Time = DateTime.Now;
             using (var context = new ElectricityRatesContext())

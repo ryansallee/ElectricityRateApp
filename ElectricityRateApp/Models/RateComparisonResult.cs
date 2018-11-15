@@ -18,14 +18,13 @@ namespace ElectricityRateApp.Models
         public string StateAbbreviation2 { get; set; }
         public double Rate2 { get; set; }
 
-        // Method using the methods of GetAndCalculateHelpers, implementations of the members of AbstractResult<ResidentialChargeResult> 
+        // Method using the implementations and inheritance of the members of AbstractResult<ResidentialChargeResult> 
         // and ICheckRate<T> to instantiate a RateComparsionResult, populate its properties(a comparison of rates between two cities), 
         // and persist that instance of a RateComparsionResult to the database.
-        public static void Compare()
+        public void Compare(RateComparisonResult rateComparison)
         {
             try
             {
-                RateComparisonResult rateComparison = new RateComparisonResult();
                 rateComparison.GetInput(rateComparison);
                 if (!rateComparison.CheckValidInput(rateComparison))
                     return;
@@ -33,7 +32,7 @@ namespace ElectricityRateApp.Models
                 string zipCode1 = ZipCode.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
                 string zipCode2 = ZipCode.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
 
-                if (!GetAndCalculateHelpers.DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
+                if (!DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
                         zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))
                     return;
 
@@ -95,7 +94,7 @@ namespace ElectricityRateApp.Models
         }
         
         //Implementation of an abstract method.
-        public override RateComparisonResult GetInput(RateComparisonResult rateComparison)
+        protected override RateComparisonResult GetInput(RateComparisonResult rateComparison)
         {
             Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
             rateComparison.City1 = Console.ReadLine().ToUpper();
@@ -109,7 +108,7 @@ namespace ElectricityRateApp.Models
         }
 
         //Implementation of an abstract method.
-        public override bool CheckValidInput(RateComparisonResult rateComparison)
+        protected override bool CheckValidInput(RateComparisonResult rateComparison)
         {
             bool inputValid = true;
             if (string.IsNullOrEmpty(rateComparison.City1))
@@ -146,7 +145,7 @@ namespace ElectricityRateApp.Models
         }
         
         //Implementation of an abstract method.
-        public override void Save(RateComparisonResult rateComparison)
+        protected override void Save(RateComparisonResult rateComparison)
         {
             rateComparison.Time = DateTime.Now;
             using (var context = new ElectricityRatesContext())
@@ -156,7 +155,7 @@ namespace ElectricityRateApp.Models
             }
         }
 
-        //Implementation of the ICheckRate<T> interface method.
+        //Implementation of the IRate<T>.
         public bool CheckIfRate0(RateComparisonResult rateComparison)
         {
             if (rateComparison.Rate1 == 0 && rateComparison.Rate2 == 0)
@@ -183,6 +182,7 @@ namespace ElectricityRateApp.Models
             return true;
         }
 
+        //Implementation of IRate<T>.
         public double GetRate(string zipCode)
         {
             using (var context = new ElectricityRatesContext())
