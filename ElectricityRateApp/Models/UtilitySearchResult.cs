@@ -14,8 +14,8 @@ namespace ElectricityRateApp.Models
         public string StateAbbreviation { get; set; }
         public string UtilityName { get; set; }
 
-        // Method using the methods of GetAndCalculateHelpers and implementations of the members of AbstractResult<T>
-        // to instantiate a UtilitySearchResult, populates its properties(the name of the electric utility provider for a city),  
+        // Method usingimplementations of the members of Result<T> to populate the properties
+        // of a UtilitySearchResult (the name of the electric utility provider for a city),  
         // and persist that instance of a UtilitySearchResult to the database.
         public void Get(UtilitySearchResult utilitySearch)
         {

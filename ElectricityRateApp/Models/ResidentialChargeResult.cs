@@ -15,10 +15,9 @@ namespace ElectricityRateApp.Models
         public double Charge { get; set; }
         public int Usage { get; set; }
 
-        // Method using the methods of GetAndCalculateHelpers, implementations of the members of AbstractResult<ResidentialChargeResult>
-        // and Iate<T> to instantiate a ResidentialChargeResult, populate its properties
-        // (an estimation of eletricity usage charges), and persist that instance of a ResidentialChargeResult
-        // to the database.
+        // Method using the implementations of the members of RateGetters<ResidentialChargeResult>
+        // to populate the properties of a ResidentialChargeResult (an estimation of eletricity usage charges)
+        // and persist that instance of a ResidentialChargeResult to the database.
         public void Calculate(ResidentialChargeResult chargeResult)
         {
             try

@@ -17,9 +17,9 @@ namespace ElectricityRateApp.Models
         public string StateAbbreviation2 { get; set; }
         public double Rate2 { get; set; }
 
-        // Method using the implementations and inheritance of the members of AbstractResult<ResidentialChargeResult> 
-        // and ICheckRate<T> to instantiate a RateComparsionResult, populate its properties(a comparison of rates between two cities), 
-        // and persist that instance of a RateComparsionResult to the database.
+        // Method using the implementations of the members of RateGetters<RateComparisonResult>
+        // to  populate the properties of a RateComparsion Result (a comparison of electricity rates)
+        // and persist that instance of a ResidentialChargeResult to the database.
         public void Compare(RateComparisonResult rateComparison)
         {
             try
@@ -154,7 +154,7 @@ namespace ElectricityRateApp.Models
             }
         }
 
-        //Implementation of the IRate<T>.
+        //Implementation of an abstract method.
         protected override bool CheckIfRate0(RateComparisonResult rateComparison)
         {
             if (rateComparison.Rate1 == 0 && rateComparison.Rate2 == 0)
@@ -181,16 +181,5 @@ namespace ElectricityRateApp.Models
             return true;
         }
 
-        ////Implementation of IRate<T>.
-        //public double GetRate(string zipCode)
-        //{
-        //    using (var context = new ElectricityRatesContext())
-        //    {
-        //        return context.PowerRates.Where(pr => pr.ZipCode == zipCode)
-        //                    .Select(pr => pr.ResidentialRate)
-        //                    .DefaultIfEmpty(0)
-        //                    .Sum();
-        //    }
-        //}
     }
 }
