@@ -24,8 +24,8 @@ namespace ElectricityRateApp.Models
                 utilitySearch.GetInput(utilitySearch);
                 if (!utilitySearch.CheckValidInput(utilitySearch))
                     return;
-
-                string zipCode = ZipCode.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
+                                
+                string zipCode = ZipCodes.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
 
                 if (!DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
                     return;

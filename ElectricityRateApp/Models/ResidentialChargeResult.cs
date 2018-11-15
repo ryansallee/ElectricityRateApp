@@ -1,6 +1,5 @@
 ﻿using ConsoleTables;
 using ElectricityRateApp.Data;
-using ElectricityRateApp.HelperMethods;
 using System;
 using System.Linq;
 
@@ -27,7 +26,7 @@ namespace ElectricityRateApp.Models
                 if (!chargeResult.CheckValidInput(chargeResult))
                     return;                
 
-                string zipCode = ZipCode.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
+                string zipCode = ZipCodes.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
                 if (!DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
                     return;
 

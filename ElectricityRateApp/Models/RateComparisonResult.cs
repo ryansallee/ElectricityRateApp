@@ -1,6 +1,5 @@
 ﻿using ConsoleTables;
 using ElectricityRateApp.Data;
-using ElectricityRateApp.HelperMethods;
 using System;
 using System.Linq;
 
@@ -29,8 +28,8 @@ namespace ElectricityRateApp.Models
                 if (!rateComparison.CheckValidInput(rateComparison))
                     return;
 
-                string zipCode1 = ZipCode.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
-                string zipCode2 = ZipCode.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
+                string zipCode1 = ZipCodes.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
+                string zipCode2 = ZipCodes.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
 
                 if (!DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
                         zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))

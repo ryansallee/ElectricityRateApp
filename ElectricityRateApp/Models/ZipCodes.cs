@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Models
 {
-    // Class to model 
-    public class ZipCode
+    // Class to model to ZipCodes
+    public class ZipCodes
     {
         [JsonProperty(PropertyName = "zip_codes")]
-        public string[] ZipCodes { get; set; }
+        public string[] ZipCodesArr { get; set; }
 
         //Method to populate the property of the ZipCode model. This method is a helper
         //to the Get() methods of RateCommparisonResult ResidentialChargeResult, and UtilitySearchResult
@@ -29,12 +29,12 @@ namespace ElectricityRateApp.Models
 
                 string responseString = await responseMessage.Content.ReadAsStringAsync();
 
-                ZipCode zipCodesResult = JsonConvert.DeserializeObject<ZipCode>(responseString);
-
-                if (zipCodesResult.ZipCodes.Length < 1)
+                ZipCodes zipCodesResult = JsonConvert.DeserializeObject<ZipCodes>(responseString);
+                              
+                if (zipCodesResult.ZipCodesArr.Length < 1)
                     return null;
                 else
-                    return zipCodesResult.ZipCodes[0];
+                    return zipCodesResult.ZipCodesArr[0];
             }
         }
 

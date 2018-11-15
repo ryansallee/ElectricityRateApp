@@ -100,7 +100,7 @@
     <Compile Include="Models\UtilitySearchResult.cs" />
     <Compile Include="Models\RateComparisonResult.cs" />
     <Compile Include="Models\ResidentialChargeResult.cs" />
-    <Compile Include="Models\ZipCode.cs" />
+    <Compile Include="Models\ZipCodes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
