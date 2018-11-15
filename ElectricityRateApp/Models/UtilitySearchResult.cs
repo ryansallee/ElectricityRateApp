@@ -7,17 +7,18 @@ using ConsoleTables;
 namespace ElectricityRateApp.Models
 {
     //Class to model a UtilitySearchResult.
-    //Inherits and implements AbstractResult<T>.
+    //Inherits and implements Result<T>.
     public class UtilitySearchResult : Result<UtilitySearchResult>
     {
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public string UtilityName { get; set; }
 
-        // Method usingimplementations of the members of Result<T> to populate the properties
+        // Implementation of the PopulateAndDisplayResult abstract method.
+        // Method using mplementations of the members of Result<T> to populate the properties
         // of a UtilitySearchResult (the name of the electric utility provider for a city),  
         // and persist that instance of a UtilitySearchResult to the database.
-        public void Get(UtilitySearchResult utilitySearch)
+        public override void PopulateAndDisplayResult(UtilitySearchResult utilitySearch)
         {
             try
             {
@@ -72,7 +73,7 @@ namespace ElectricityRateApp.Models
             Console.WriteLine();
         }
 
-        //Implementation of abstract method.
+        //Implementation of the GetInput abstract method.
         protected override UtilitySearchResult GetInput(UtilitySearchResult utilitySearch)
         {
             Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
@@ -82,7 +83,7 @@ namespace ElectricityRateApp.Models
             return utilitySearch;
         }
 
-        //Implementation of abstract method.
+        //Implementation of the CheckValidInput abstract method.
         protected override bool CheckValidInput(UtilitySearchResult utilitySearch)
         {
             bool inputValid = true;
@@ -104,7 +105,7 @@ namespace ElectricityRateApp.Models
             return inputValid;
         }
 
-        //Implementation of abstract method.
+        //Implementation of the Save abstract method.
         protected override void Save(UtilitySearchResult utilitySearch)
         {
             utilitySearch.Time = DateTime.Now;

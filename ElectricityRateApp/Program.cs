@@ -22,17 +22,17 @@ namespace ElectricityRateApp
                 {
                     case 1:
                         UtilitySearchResult utilitySearch = new UtilitySearchResult();
-                        utilitySearch.Get(utilitySearch);
+                        utilitySearch.PopulateAndDisplayResult(utilitySearch);
                         Clear();
                         break;
                     case 2:
                         ResidentialChargeResult chargeResult = new ResidentialChargeResult();
-                        chargeResult.Calculate(chargeResult);
+                        chargeResult.PopulateAndDisplayResult(chargeResult);
                         Clear();
                         break;
                     case 3:
                         RateComparisonResult rateComparison = new RateComparisonResult();
-                        rateComparison.Compare(rateComparison);
+                        rateComparison.PopulateAndDisplayResult(rateComparison);
                         Clear();
                         break;
                     case 4:

@@ -17,10 +17,11 @@ namespace ElectricityRateApp.Models
         public string StateAbbreviation2 { get; set; }
         public double Rate2 { get; set; }
 
+        // Implementation of the PopulateAndDisplayResult abstract method.
         // Method using the implementations of the members of RateGetters<RateComparisonResult>
         // to  populate the properties of a RateComparsion Result (a comparison of electricity rates)
         // and persist that instance of a ResidentialChargeResult to the database.
-        public void Compare(RateComparisonResult rateComparison)
+        public override void PopulateAndDisplayResult(RateComparisonResult rateComparison)
         {
             try
             {
@@ -92,7 +93,7 @@ namespace ElectricityRateApp.Models
             Console.WriteLine();
         }
         
-        //Implementation of an abstract method.
+        //Implementation of the GetInput abstract method.
         protected override RateComparisonResult GetInput(RateComparisonResult rateComparison)
         {
             Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
@@ -106,7 +107,7 @@ namespace ElectricityRateApp.Models
             return rateComparison;
         }
 
-        //Implementation of an abstract method.
+        //Implementation of the CheckValidInput abstract method.
         protected override bool CheckValidInput(RateComparisonResult rateComparison)
         {
             bool inputValid = true;
@@ -143,7 +144,7 @@ namespace ElectricityRateApp.Models
             return inputValid;
         }
         
-        //Implementation of an abstract method.
+        //Implementation of the Save abstract method.
         protected override void Save(RateComparisonResult rateComparison)
         {
             rateComparison.Time = DateTime.Now;
@@ -154,7 +155,7 @@ namespace ElectricityRateApp.Models
             }
         }
 
-        //Implementation of an abstract method.
+        //Implementation of the CheckIfRate0 abstract method.
         protected override bool CheckIfRate0(RateComparisonResult rateComparison)
         {
             if (rateComparison.Rate1 == 0 && rateComparison.Rate2 == 0)

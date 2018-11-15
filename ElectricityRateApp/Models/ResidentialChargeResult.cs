@@ -15,10 +15,11 @@ namespace ElectricityRateApp.Models
         public double Charge { get; set; }
         public int Usage { get; set; }
 
+        // Implementation of the PopulateAndDisplayResult abstract method.
         // Method using the implementations of the members of RateGetters<ResidentialChargeResult>
         // to populate the properties of a ResidentialChargeResult (an estimation of eletricity usage charges)
         // and persist that instance of a ResidentialChargeResult to the database.
-        public void Calculate(ResidentialChargeResult chargeResult)
+        public override void PopulateAndDisplayResult(ResidentialChargeResult chargeResult)
         {
             try
             {   chargeResult.GetInput(chargeResult);
@@ -67,7 +68,7 @@ namespace ElectricityRateApp.Models
             Console.WriteLine();
         }
 
-        //Implementation of abstract method.
+        //Implementation of the GetInput abstract method.
         protected override ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult)
         {
             Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
@@ -80,7 +81,7 @@ namespace ElectricityRateApp.Models
             return chargeResult;
         }
 
-        //Implementation of abstract method.
+        //Implementation of the CheckValidInput method.
         protected override bool CheckValidInput(ResidentialChargeResult chargeResult)
         {
             bool inputValid = true;
@@ -107,7 +108,7 @@ namespace ElectricityRateApp.Models
             return inputValid;
         }
 
-        //Implementation of abstract method.
+        //Implementation of the Save abstract method.
         protected override void Save(ResidentialChargeResult chargeResult)
         {
             chargeResult.Time = DateTime.Now;
@@ -118,7 +119,7 @@ namespace ElectricityRateApp.Models
             }
         }
 
-        //Implementation of the IRate<T>.
+        //Implementation of the CheckIfRate0 abstract method.
         protected override bool CheckIfRate0(ResidentialChargeResult chargeResult)
         {
             if (chargeResult.Rate == 0)
