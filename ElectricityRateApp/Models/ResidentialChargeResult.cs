@@ -7,7 +7,7 @@ namespace ElectricityRateApp.Models
 {
     //Class to model a ResidentialChargeResult.
     //Implements ICheckRate<T> interface as well as inherits and implements AbstractResult<T>.
-    public class ResidentialChargeResult:AbstractResult<ResidentialChargeResult>, IRate<ResidentialChargeResult>
+    public class ResidentialChargeResult:RateGetters<ResidentialChargeResult>
     {
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
@@ -120,7 +120,7 @@ namespace ElectricityRateApp.Models
         }
 
         //Implementation of the IRate<T>.
-        public bool CheckIfRate0(ResidentialChargeResult chargeResult)
+        protected override bool CheckIfRate0(ResidentialChargeResult chargeResult)
         {
             if (chargeResult.Rate == 0)
             {
@@ -131,16 +131,6 @@ namespace ElectricityRateApp.Models
             return true;
         }
 
-        //Implementation of IRate<T>.
-        public double GetRate(string zipCode)
-        {
-            using (var context = new ElectricityRatesContext())
-            {
-                return context.PowerRates.Where(pr => pr.ZipCode == zipCode)
-                            .Select(pr => pr.ResidentialRate)
-                            .DefaultIfEmpty(0)
-                            .Sum();
-            }
-        }
+
     }
 }

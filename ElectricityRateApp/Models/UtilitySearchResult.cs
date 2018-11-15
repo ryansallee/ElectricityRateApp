@@ -8,7 +8,7 @@ namespace ElectricityRateApp.Models
 {
     //Class to model a UtilitySearchResult.
     //Inherits and implements AbstractResult<T>.
-    public class UtilitySearchResult : AbstractResult<UtilitySearchResult>
+    public class UtilitySearchResult : Result<UtilitySearchResult>
     {
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
