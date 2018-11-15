@@ -18,7 +18,8 @@ namespace ElectricityRateApp.Data
                 if (context.PowerRates.Any())
                     return;
                 Console.WriteLine("Adding electricty rate information to the database. This process may take a few minutes.");
-                string fileName = Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, "iouzipcodes2016.csv");
+                var directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                string fileName = Path.Combine(directory, "iouzipcodes2016.csv");
                 int i = 1;
                 using (var reader = new StreamReader(fileName))
                 {

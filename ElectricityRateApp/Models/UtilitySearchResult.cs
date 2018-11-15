@@ -31,7 +31,7 @@ namespace ElectricityRateApp.Models
                 if (!GetAndCalculateHelpers.DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
                     return;
 
-                utilitySearch.UtilityName = GetFromPowerRates.GetUtilityProviderName(zipCode);
+                utilitySearch.UtilityName = GetUtilityProviderName(zipCode);
 
                 if (utilitySearch.UtilityName == null)
                 {
@@ -113,6 +113,17 @@ namespace ElectricityRateApp.Models
             {
                 context.UtilitySearchResults.Add(utilitySearch);
                 context.SaveChanges();
+            }
+        }
+
+        //Helper method to get the name of the Utility provider.
+        public static string GetUtilityProviderName(string zipCode)
+        {
+            using (var context = new ElectricityRatesContext())
+            {
+                return context.PowerRates.Where(pr => pr.ZipCode == zipCode)
+                                       .Select(pr => pr.UtilityName)
+                                       .FirstOrDefault();
             }
         }
     }

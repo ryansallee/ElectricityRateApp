@@ -5,7 +5,7 @@ using System;
 namespace ElectricityRateApp.HelperMethods
 {
     // Overloaded methods to help the Get, Calculate, and Compare methods of the RateComparsionResult,
-    // ResidentialChargeResult, and UtilitySearch models. These methods help prevent long method smells.
+    // ResidentialChargeResult, and UtilitySearch models. These methods help prevent methods smells.
     public static class GetAndCalculateHelpers
     {
 

@@ -7,7 +7,7 @@ namespace ElectricityRateApp
 {
     class Program
     {
-        static void  Main(string[] args)
+        static void Main(string[] args)
         {
             Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
             Console.WriteLine("Welcome to the Electricity Rate App.");
@@ -25,7 +25,8 @@ namespace ElectricityRateApp
                         Clear();
                         break;
                     case 2:
-                        ResidentialChargeResult.Calculate();
+                        ResidentialChargeResult chargeResult = new ResidentialChargeResult();
+                        chargeResult.Calculate(chargeResult);
                         Clear();
                         break;
                     case 3:
@@ -46,7 +47,7 @@ namespace ElectricityRateApp
                         break;
                     case 7:
                         break;
-
+                        
                 }
                 if (menuOption != 7)
                     menuOption = MainMenu();
