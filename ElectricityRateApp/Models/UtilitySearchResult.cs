@@ -10,6 +10,8 @@ namespace ElectricityRateApp.Models
     //Inherits and implements Result<T>.
     public class UtilitySearchResult : Result<UtilitySearchResult>
     {
+        public int Id { get; set; }
+        public DateTime Time { get; set; }
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public string UtilityName { get; set; }
@@ -18,7 +20,7 @@ namespace ElectricityRateApp.Models
         // Method using mplementations of the members of Result<T> to populate the properties
         // of a UtilitySearchResult (the name of the electric utility provider for a city),  
         // and persist that instance of a UtilitySearchResult to the database.
-        public override void PopulateAndDisplayResult(UtilitySearchResult utilitySearch)
+        public void PopulateAndDisplayResult(UtilitySearchResult utilitySearch)
         {
             try
             {

@@ -9,6 +9,8 @@ namespace ElectricityRateApp.Models
     //Implements ICheckRate<T> interface as well as inherits and implements AbstractResult<T>.
     public class ResidentialChargeResult:RateGetters<ResidentialChargeResult>
     {
+        public int Id { get; set; }
+        public DateTime Time { get; set; }
         public string City { get; set; }
         public string StateAbbreviation { get; set; }
         public double Rate { get; set; }
@@ -19,7 +21,7 @@ namespace ElectricityRateApp.Models
         // Method using the implementations of the members of RateGetters<ResidentialChargeResult>
         // to populate the properties of a ResidentialChargeResult (an estimation of eletricity usage charges)
         // and persist that instance of a ResidentialChargeResult to the database.
-        public override void PopulateAndDisplayResult(ResidentialChargeResult chargeResult)
+        public void PopulateAndDisplayResult(ResidentialChargeResult chargeResult)
         {
             try
             {   chargeResult.GetInput(chargeResult);

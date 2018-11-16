@@ -8,11 +8,10 @@ namespace ElectricityRateApp.Models
     {
         //Both of these properties are shared amongst RateComparsionResult, ResidentialChargeResult, and
         //UtilityResult. 
-        public int Id { get; set; }
-        public DateTime Time { get; set; }
+ 
 
-        //Abstract method as all Classes that inherit Result<T> create results.
-        public abstract void PopulateAndDisplayResult(T t);
+        ////Abstract method as all Classes that inherit Result<T> create results.
+        //public abstract void PopulateAndDisplayResult(T t);
 
         // Abstract method to help the Get, Calculate, and Compare methods of the RateComparsionResult get inputs,
         // ResidentialChargeResult, and UtilitySearch models. 

@@ -127,6 +127,8 @@ namespace ElectricityRateApp.Migrations
                 StateAbbreviation2 = "CO",
                 Rate2 = 0.114704461
             };
+
+            context.RateComparisonResults.AddOrUpdate(comparison1, comparison2, comparison3);
         }
     }
 }

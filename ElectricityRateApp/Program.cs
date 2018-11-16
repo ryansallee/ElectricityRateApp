@@ -2,6 +2,7 @@
 using System;
 
 using ElectricityRateApp.Models;
+using ElectricityRateApp.Logic;
 
 namespace ElectricityRateApp
 {
@@ -12,7 +13,8 @@ namespace ElectricityRateApp
             Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
             Console.WriteLine("Welcome to the Electricity Rate App.");
             CSVtoDB.AddPowerRates();
-            
+
+            RateComparisonLogic rateComparisonLogic = new RateComparisonLogic();
 
             var menuOption = MainMenu();
 
@@ -32,7 +34,7 @@ namespace ElectricityRateApp
                         break;
                     case 3:
                         RateComparisonResult rateComparison = new RateComparisonResult();
-                        rateComparison.PopulateAndDisplayResult(rateComparison);
+                        rateComparisonLogic.PopulateAndDisplayResult(rateComparison, rateComparisonLogic);
                         Clear();
                         break;
                     case 4:
@@ -44,7 +46,7 @@ namespace ElectricityRateApp
                         Clear();
                         break;
                     case 6:
-                        RateComparisonResult.GetHistory();
+                        rateComparisonLogic.GetHistory();
                         Clear();
                         break;
                     case 7:
