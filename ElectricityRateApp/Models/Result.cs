@@ -6,15 +6,8 @@ namespace ElectricityRateApp.Models
     //When the class is inherited and implemented it must take a type.
     public abstract class Result<T>
     {
-        //Both of these properties are shared amongst RateComparsionResult, ResidentialChargeResult, and
-        //UtilityResult. 
- 
-
-        ////Abstract method as all Classes that inherit Result<T> create results.
-        //public abstract void PopulateAndDisplayResult(T t);
-
-        // Abstract method to help the Get, Calculate, and Compare methods of the RateComparsionResult get inputs,
-        // ResidentialChargeResult, and UtilitySearch models. 
+        // Abstract method to help the PopulateAndDisplay methods of the logic clsses get inputs of
+        // ResidentialChargeResult, and UtilitySearchResult, and RateComparisonResult models. 
         // Protected access modifier as the method should only be called on classes that inherit Result<T>
         protected abstract T GetInput(T t);
 

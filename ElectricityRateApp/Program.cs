@@ -14,6 +14,7 @@ namespace ElectricityRateApp
             Console.WriteLine("Welcome to the Electricity Rate App.");
             CSVtoDB.AddPowerRates();
 
+            UtilitySearchLogic utilitySearchLogic = new UtilitySearchLogic();
             RateComparisonLogic rateComparisonLogic = new RateComparisonLogic();
 
             var menuOption = MainMenu();
@@ -24,7 +25,7 @@ namespace ElectricityRateApp
                 {
                     case 1:
                         UtilitySearchResult utilitySearch = new UtilitySearchResult();
-                        utilitySearch.PopulateAndDisplayResult(utilitySearch);
+                        utilitySearchLogic.PopulateAndDisplayResult(utilitySearch, utilitySearchLogic);
                         Clear();
                         break;
                     case 2:
@@ -38,7 +39,7 @@ namespace ElectricityRateApp
                         Clear();
                         break;
                     case 4:
-                        UtilitySearchResult.GetHistory();
+                        utilitySearchLogic.GetHistory();
                         Clear();
                         break;
                     case 5:

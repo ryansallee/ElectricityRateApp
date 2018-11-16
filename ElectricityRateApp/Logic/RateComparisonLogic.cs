@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Logic
 {
-    class RateComparisonLogic:RateGetters<RateComparisonResult>
+    //Implements and inherits RateGetters abstract class
+    class RateComparisonLogic :RateGetters<RateComparisonResult>
     {
         private ZipCodeLogic _zipCodeLogic = new ZipCodeLogic();
-        
+
+        // Implementation of the PopulateAndDisplayResult abstract method.
+        // Method using the implementations of the members of RateGetters<RateComparisonResult>
+        // to populate the properties of a RateComparsion Result (a comparison of electricity rates)
+        // and persist that instance of a ResidentialChargeResult to the database.
         public void PopulateAndDisplayResult(RateComparisonResult rateComparison, RateComparisonLogic logic)
         {
             try
@@ -61,6 +66,8 @@ namespace ElectricityRateApp.Logic
             }
         }
 
+        //Method to get a user-specified length IQueryable<RateComparisonResult> and displays them 
+        // to the console using the ConsoleTables NuGet extension.
         public void GetHistory()
         {
             if (!NumberOfResults(out int numberOfResults, "rate comparisons"))
@@ -83,6 +90,7 @@ namespace ElectricityRateApp.Logic
             Console.WriteLine();
         }
 
+        //Implementation of the GetInput abstract method.
         protected override RateComparisonResult GetInput(RateComparisonResult rateComparison)
         {
             Console.WriteLine("Please provide the name of the first city to compare rates between cities.");
@@ -96,6 +104,7 @@ namespace ElectricityRateApp.Logic
             return rateComparison;
         }
 
+        //Implementation of the CheckValidInput abstract method.
         protected override bool CheckValidInput(RateComparisonResult rateComparison)
         {
             bool inputValid = true;
@@ -132,6 +141,7 @@ namespace ElectricityRateApp.Logic
             return inputValid;
         }
 
+        //Implementation of the Save abstract method.
         protected override void Save(RateComparisonResult rateComparison)
         {
             rateComparison.Time = DateTime.Now;
@@ -142,6 +152,7 @@ namespace ElectricityRateApp.Logic
             }
         }
 
+        //Implementation of the CheckIfRate0 abstract method.
         protected override bool CheckIfRate0(RateComparisonResult rateComparison)
         {
             if (rateComparison.Rate1 == 0 && rateComparison.Rate2 == 0)

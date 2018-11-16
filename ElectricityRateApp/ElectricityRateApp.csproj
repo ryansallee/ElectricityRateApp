@@ -62,6 +62,7 @@
     <Compile Include="Data\CSVtoDB.cs" />
     <Compile Include="Data\ElectricityRatesContext.cs" />
     <Compile Include="Logic\RateComparisonLogic.cs" />
+    <Compile Include="Logic\UtilitySearchLogic.cs" />
     <Compile Include="Logic\ZipCodeLogic.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.Designer.cs">
