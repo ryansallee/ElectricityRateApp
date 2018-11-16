@@ -9,7 +9,7 @@ namespace ElectricityRateApp.Models
 {
     //Abstraction of a RateGetter. It inherits Result<T> as all RateGetters are also Results.
     //When the class is inhertited it must take a type.
-    public abstract class RateGetters<T>: Result<T>
+    public abstract class RateGettersLogic<T>: ResultLogic<T>
     {
         //Implemented method to get a rate from PowerRates as all RateGetters need to have 
         //same implmentation.

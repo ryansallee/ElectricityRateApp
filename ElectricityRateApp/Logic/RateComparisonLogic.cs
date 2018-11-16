@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace ElectricityRateApp.Logic
 {
     //Implements and inherits RateGetters abstract class
-    class RateComparisonLogic :RateGetters<RateComparisonResult>
+    class RateComparisonLogic: RateGettersLogic<RateComparisonResult>
     {
         private ZipCodeLogic _zipCodeLogic = new ZipCodeLogic();
 
         // Implementation of the PopulateAndDisplayResult abstract method.
-        // Method using the implementations of the members of RateGetters<RateComparisonResult>
+        // Method using the implementations of the members of RateGettersLogic<RateComparisonResult>
         // to populate the properties of a RateComparsion Result (a comparison of electricity rates)
         // and persist that instance of a ResidentialChargeResult to the database.
         public void PopulateAndDisplayResult(RateComparisonResult rateComparison, RateComparisonLogic logic)
@@ -68,7 +68,7 @@ namespace ElectricityRateApp.Logic
 
         //Method to get a user-specified length IQueryable<RateComparisonResult> and displays them 
         // to the console using the ConsoleTables NuGet extension.
-        public void GetHistory()
+        public override void GetHistory()
         {
             if (!NumberOfResults(out int numberOfResults, "rate comparisons"))
                 return;
@@ -178,6 +178,8 @@ namespace ElectricityRateApp.Logic
             }
             return true;
         }
+
+
     }
     
 }

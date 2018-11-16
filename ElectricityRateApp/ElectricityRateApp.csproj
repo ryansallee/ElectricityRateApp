@@ -59,9 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\CSVtoDB.cs" />
     <Compile Include="Data\ElectricityRatesContext.cs" />
+    <Compile Include="Logic\PowerRateLogic.cs" />
     <Compile Include="Logic\RateComparisonLogic.cs" />
+    <Compile Include="Logic\ResidentialChargeResultLogic.cs" />
     <Compile Include="Logic\UtilitySearchLogic.cs" />
     <Compile Include="Logic\ZipCodeLogic.cs" />
     <Compile Include="Migrations\201810221640109_InitalMigration.cs" />
@@ -97,9 +98,9 @@
       <DependentUpon>201811130330380_ChangedToDateTimeStringTime.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Result.cs" />
+    <Compile Include="Logic\ResultLogic.cs" />
     <Compile Include="Models\PowerRate.cs" />
-    <Compile Include="Models\RateGetters.cs" />
+    <Compile Include="Logic\RateGettersLogic.cs" />
     <Compile Include="Models\UtilitySearchResult.cs" />
     <Compile Include="Models\RateComparisonResult.cs" />
     <Compile Include="Models\ResidentialChargeResult.cs" />

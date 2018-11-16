@@ -12,9 +12,11 @@ namespace ElectricityRateApp
         {
             Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
             Console.WriteLine("Welcome to the Electricity Rate App.");
-            CSVtoDB.AddPowerRates();
+            PowerRateLogic powerRateLogic = new PowerRateLogic();
+            powerRateLogic.AddPowerRates();
 
             UtilitySearchLogic utilitySearchLogic = new UtilitySearchLogic();
+            ResidentialChargeResultLogic residentialChargeResultLogic = new ResidentialChargeResultLogic();
             RateComparisonLogic rateComparisonLogic = new RateComparisonLogic();
 
             var menuOption = MainMenu();
@@ -30,7 +32,7 @@ namespace ElectricityRateApp
                         break;
                     case 2:
                         ResidentialChargeResult chargeResult = new ResidentialChargeResult();
-                        chargeResult.PopulateAndDisplayResult(chargeResult);
+                        residentialChargeResultLogic.PopulateAndDisplayResult(chargeResult, residentialChargeResultLogic);
                         Clear();
                         break;
                     case 3:
@@ -43,7 +45,7 @@ namespace ElectricityRateApp
                         Clear();
                         break;
                     case 5:
-                        ResidentialChargeResult.GetHistory();
+                        residentialChargeResultLogic.GetHistory();
                         Clear();
                         break;
                     case 6:

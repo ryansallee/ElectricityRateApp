@@ -4,8 +4,9 @@ namespace ElectricityRateApp.Models
 {
     //Abstraction of a Result.
     //When the class is inherited and implemented it must take a type.
-    public abstract class Result<T>
+    public abstract class ResultLogic<T>
     {
+        
         // Abstract method to help the PopulateAndDisplay methods of the logic clsses get inputs of
         // ResidentialChargeResult, and UtilitySearchResult, and RateComparisonResult models. 
         // Protected access modifier as the method should only be called on classes that inherit Result<T>
@@ -17,8 +18,11 @@ namespace ElectricityRateApp.Models
         protected abstract bool CheckValidInput(T t);
 
         //Abstract method to persist RateCommparisonResult ResidentialChargeResult, and UtilitySearchResults.
-        // Protected access modifier as the method should only be called on classes that inherit Result<T>
+        //Protected access modifier as the method should only be called on classes that inherit Result<T>
         protected abstract void Save(T t);
+
+        //Abstract method to display history of RateComparisonResults, ResidentialChargeResults, and UtilitySearchResults.
+        public abstract void GetHistory();
 
         // Method to help the GetHistory methods of the RateComparisonResult, ResidentialChargeResult,
         // and UtilitySearchResult models the the number of previous results. It also checks

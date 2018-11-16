@@ -11,8 +11,8 @@ namespace ElectricityRateApp.Logic
 {
     class ZipCodeLogic
     {
-        //Method to populate the property of the ZipCode model. This method is a helper
-        //to the PopulateAndDisplay methods of the logic classes to get a zipcode from zipcodeapi.com for a given locale.
+        //Method to populate the property of the ZipCode model. This method is a helper to the PopulateAndDisplay
+        // methods of the logic classes to get a zipcode from zipcodeapi.com for a given locale.
         //This allows the rate information to be searched in the PowerRate table since a user may not know a zipcode for a locale.
         public async Task<string> GetZipCode(string city, string stateAbbreviation)
         {

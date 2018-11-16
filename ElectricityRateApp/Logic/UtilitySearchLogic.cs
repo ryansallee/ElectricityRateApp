@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Logic
 {
-    class UtilitySearchLogic:Result<UtilitySearchResult>
+    class UtilitySearchLogic: ResultLogic<UtilitySearchResult>
     {
         private ZipCodeLogic _zipCodeLogic = new ZipCodeLogic();
 
@@ -50,7 +50,7 @@ namespace ElectricityRateApp.Logic
 
         // Method to get a user-specified length of IQueryable<UtilitySearchResult> and displays them 
         // to the console using the ConsoleTables NuGet extension.
-        public void GetHistory()
+        public override void GetHistory()
         {
             if (!NumberOfResults(out int numberOfResults, "utility provider searches"))
                 return;

@@ -1,14 +1,18 @@
-﻿using System;
-using System.IO;
+﻿using CsvHelper;
+using ElectricityRateApp.Data;
 using ElectricityRateApp.Models;
-using CsvHelper;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ElectricityRateApp.Data
+namespace ElectricityRateApp.Logic
 {
-    public static class CSVtoDB
-    {                    
-        public static void AddPowerRates()
+    class PowerRateLogic
+    {
+        public void AddPowerRates()
         {
             //Method to deserialize CSV file, to populate the properties of the PowerRate model
             //when the class is instantiated, and to persist each instance to the EF code-first table PowerRates
@@ -17,7 +21,7 @@ namespace ElectricityRateApp.Data
             {
                 if (context.PowerRates.Any())
                     return;
-                Console.WriteLine("Adding electricty rate information to the database. This process may take a few minutes.");
+                Console.WriteLine("Since this is the first run of the app, we are adding electricty rate information to the database. This process may take a few minutes.");
                 var directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                 string fileName = Path.Combine(directory, "iouzipcodes2016.csv");
                 int i = 1;
@@ -38,7 +42,7 @@ namespace ElectricityRateApp.Data
                             { zipCode = csv[0]; }
                             string utilityName = csv[2];
                             double residentialRate;
-                            if (double.TryParse(csv[8], out residentialRate));
+                            if (double.TryParse(csv[8], out residentialRate)) ;
 
                             PowerRate rate = new PowerRate(zipCode, utilityName, residentialRate);
                             context.PowerRates.Add(rate);
