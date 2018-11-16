@@ -2,21 +2,17 @@
 using ElectricityRateApp.Data;
 using ElectricityRateApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Logic
 {
-    //Implements and inherits RateGetters abstract class
-    class RateComparisonLogic: RateGettersLogic<RateComparisonResult>
+    //Implements and inherits RateGetters abstract class.
+    class RateComparisonLogic : RateGettersLogic<RateComparisonResult>
     {
-        private ZipCodeLogic _zipCodeLogic = new ZipCodeLogic();
-
-        // Implementation of the PopulateAndDisplayResult abstract method.
+        //private ZipCodeLogic _zipCodeLogic = new ZipCodeLogic();
+        
         // Method using the implementations of the members of RateGettersLogic<RateComparisonResult>
-        // to populate the properties of a RateComparsion Result (a comparison of electricity rates)
+        // to populate the properties of a RateComparsionResult (a comparison of electricity rates)
         // and persist that instance of a ResidentialChargeResult to the database.
         public void PopulateAndDisplayResult(RateComparisonResult rateComparison, RateComparisonLogic logic)
         {
@@ -26,8 +22,8 @@ namespace ElectricityRateApp.Logic
                 if (!logic.CheckValidInput(rateComparison))
                     return;
 
-                string zipCode1 = _zipCodeLogic.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
-                string zipCode2 = _zipCodeLogic.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
+                string zipCode1 = ZIPCodeLogic.GetZipCode(rateComparison.City1, rateComparison.StateAbbreviation1).Result;
+                string zipCode2 = ZIPCodeLogic.GetZipCode(rateComparison.City2, rateComparison.StateAbbreviation2).Result;
 
                 if (!DoesCityExist(zipCode1, rateComparison.City1, rateComparison.StateAbbreviation1,
                         zipCode2, rateComparison.City2, rateComparison.StateAbbreviation2))
@@ -66,7 +62,9 @@ namespace ElectricityRateApp.Logic
             }
         }
 
-        //Method to get a user-specified length IQueryable<RateComparisonResult> and displays them 
+
+        // Implementation of the GetHistory abstract method.
+        // Method to get a user-specified length IQueryable<RateComparisonResult> and displays them 
         // to the console using the ConsoleTables NuGet extension.
         public override void GetHistory()
         {
@@ -181,5 +179,5 @@ namespace ElectricityRateApp.Logic
 
 
     }
-    
+
 }

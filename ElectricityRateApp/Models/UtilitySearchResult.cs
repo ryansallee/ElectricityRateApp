@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
-
-using ElectricityRateApp.Data;
-using ConsoleTables;
 
 namespace ElectricityRateApp.Models
 {
-    //Class to model a UtilitySearchResult.
-    //Inherits and implements Result<T>.
+    //Class to model a UtilitySearchResult-obtaining the name of an electric uitlity provider.
     public class UtilitySearchResult
     {
         public int Id { get; set; }

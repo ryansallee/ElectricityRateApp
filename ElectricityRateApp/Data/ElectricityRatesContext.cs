@@ -3,7 +3,7 @@ using ElectricityRateApp.Models;
 
 namespace ElectricityRateApp.Data
 {
-    public class ElectricityRatesContext: DbContext
+    public class ElectricityRatesContext : DbContext
     {
         //Constructor for the Context. The database is named Rates.
         public ElectricityRatesContext() : base("Rates")

@@ -1,12 +1,8 @@
-﻿using ConsoleTables;
-using ElectricityRateApp.Data;
-using System;
-using System.Linq;
+﻿using System;
 
 namespace ElectricityRateApp.Models
 {
-    //Class to model a RateComparsionResult.
-    
+    //Class to model a RateComparsionResult-a comparison of the electric utility rates between 2 cities.    
     public class RateComparisonResult
     {
         public int Id { get; set; }

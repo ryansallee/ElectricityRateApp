@@ -1,11 +1,8 @@
-﻿using ConsoleTables;
-using ElectricityRateApp.Data;
-using System;
-using System.Linq;
+﻿using System;
 
 namespace ElectricityRateApp.Models
 {
-    //Class to model a ResidentialChargeResult.
+    //Class to model a ResidentialChargeResult-an estimation of usage-electricity charges.
     public class ResidentialChargeResult
     {
         public int Id { get; set; }
@@ -15,8 +12,6 @@ namespace ElectricityRateApp.Models
         public double Rate { get; set; }
         public double Charge { get; set; }
         public int Usage { get; set; }
-
-  
 
 
     }

@@ -2,16 +2,13 @@
 using ElectricityRateApp.Data;
 using ElectricityRateApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Logic
 {
     class UtilitySearchLogic: ResultLogic<UtilitySearchResult>
     {
-        private ZipCodeLogic _zipCodeLogic = new ZipCodeLogic();
+        
 
         // Method using implementations of the members of Result<T> to populate the properties
         // of a UtilitySearchResult (the name of the electric utility provider for a city),  
@@ -24,7 +21,7 @@ namespace ElectricityRateApp.Logic
                 if (!logic.CheckValidInput(utilitySearch))
                     return;
 
-                string zipCode = _zipCodeLogic.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
+                string zipCode = ZIPCodeLogic.GetZipCode(utilitySearch.City, utilitySearch.StateAbbreviation).Result;
 
                 if (!DoesCityExist(zipCode, utilitySearch.City, utilitySearch.StateAbbreviation))
                     return;
@@ -48,6 +45,7 @@ namespace ElectricityRateApp.Logic
             }
         }
 
+        // Implementation of the GetHistory abstract method.
         // Method to get a user-specified length of IQueryable<UtilitySearchResult> and displays them 
         // to the console using the ConsoleTables NuGet extension.
         public override void GetHistory()
@@ -71,7 +69,7 @@ namespace ElectricityRateApp.Logic
             Console.WriteLine();
         }
 
-        //Implementation of the GetInput abstract method.
+        // Implementation of the GetInput abstract method.
         protected override UtilitySearchResult GetInput(UtilitySearchResult utilitySearch)
         {
             Console.WriteLine("Please provide the name of the city for which you would like to find the electric utility proivder.");
@@ -81,7 +79,7 @@ namespace ElectricityRateApp.Logic
             return utilitySearch;
         }
 
-        //Implementation of the CheckValidInput abstract method.
+        // Implementation of the CheckValidInput abstract method.
         protected override bool CheckValidInput(UtilitySearchResult utilitySearch)
         {
             bool inputValid = true;
@@ -103,7 +101,7 @@ namespace ElectricityRateApp.Logic
             return inputValid;
         }
 
-        //Implementation of the Save abstract method.
+        // Implementation of the Save abstract method.
         protected override void Save(UtilitySearchResult utilitySearch)
         {
             utilitySearch.Time = DateTime.Now;
@@ -114,7 +112,7 @@ namespace ElectricityRateApp.Logic
             }
         }
 
-        //Helper method to get the name of the Utility provider.
+        // Helper method to get the name of the Utility provider.
         private static string GetUtilityProviderName(string zipCode)
         {
             using (var context = new ElectricityRatesContext())

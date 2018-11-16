@@ -1,12 +1,22 @@
-﻿using System;
+﻿using ElectricityRateApp.Logic;
+using System;
 
 namespace ElectricityRateApp.Models
 {
-    //Abstraction of a Result.
-    //When the class is inherited and implemented it must take a type.
+    // Abstraction of a ResultLogic.
+    // When the class is inherited and implemented it must take a type.
     public abstract class ResultLogic<T>
     {
+        // Protected access property that works with the constructor to set ZIPCodeLogic to a new instance of ZipCodeLogic when 
+        // any class derived from ResultLogic is instantiated. The private set allows for encapsulation.
+        protected ZipCodeLogic ZIPCodeLogic { get; private set; }
         
+        public ResultLogic()
+        {
+            ZIPCodeLogic = new ZipCodeLogic();
+        }
+            
+
         // Abstract method to help the PopulateAndDisplay methods of the logic clsses get inputs of
         // ResidentialChargeResult, and UtilitySearchResult, and RateComparisonResult models. 
         // Protected access modifier as the method should only be called on classes that inherit Result<T>
@@ -17,11 +27,11 @@ namespace ElectricityRateApp.Models
         // Protected access modifier as the method should only be called on classes that inherit Result<T>
         protected abstract bool CheckValidInput(T t);
 
-        //Abstract method to persist RateCommparisonResult ResidentialChargeResult, and UtilitySearchResults.
-        //Protected access modifier as the method should only be called on classes that inherit Result<T>
+        // Abstract method to persist RateCommparisonResult ResidentialChargeResult, and UtilitySearchResults.
+        // Protected access modifier as the method should only be called on classes that inherit Result<T>
         protected abstract void Save(T t);
 
-        //Abstract method to display history of RateComparisonResults, ResidentialChargeResults, and UtilitySearchResults.
+        // Abstract method to display history of RateComparisonResults, ResidentialChargeResults, and UtilitySearchResults.
         public abstract void GetHistory();
 
         // Method to help the GetHistory methods of the RateComparisonResult, ResidentialChargeResult,

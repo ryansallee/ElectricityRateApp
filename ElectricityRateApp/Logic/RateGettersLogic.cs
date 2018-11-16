@@ -1,18 +1,14 @@
 ﻿using ElectricityRateApp.Data;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Models
 {
-    //Abstraction of a RateGetter. It inherits Result<T> as all RateGetters are also Results.
-    //When the class is inhertited it must take a type.
-    public abstract class RateGettersLogic<T>: ResultLogic<T>
+    // Abstraction of RateGetterLogic. RateGettersLogic<T> are also an abstraction of Results<T>.
+    // When the class is inhertited it must take a type.
+    public abstract class RateGettersLogic<T> : ResultLogic<T>
     {
-        //Implemented method to get a rate from PowerRates as all RateGetters need to have 
-        //same implmentation.
+        // Implemented method to get a rate from PowerRates as all RateGetters need to have 
+        // same implmentation.
         // Protected access modifier as the method should only be called on classes that inherit RateGetters<T>.
         protected double GetRate(string zipCode)
         {

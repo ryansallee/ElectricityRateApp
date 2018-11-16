@@ -2,17 +2,15 @@
 using ElectricityRateApp.Data;
 using ElectricityRateApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectricityRateApp.Logic
 {
     class ResidentialChargeResultLogic: RateGettersLogic<ResidentialChargeResult>
     {
-        private ZipCodeLogic _zipCodeLogic = new ZipCodeLogic();
-
+        // Method using the implementations of the members of RateGettersLogic<ResidentialChargeResult>
+        // to populate the properties of a ResidentialChargeResult (a comparison of electricity rates)
+        // and persist that instance of a ResidentialChargeResult to the database.
         public void PopulateAndDisplayResult(ResidentialChargeResult chargeResult, ResidentialChargeResultLogic logic)
         {
             try
@@ -21,7 +19,7 @@ namespace ElectricityRateApp.Logic
                 if (!logic.CheckValidInput(chargeResult))
                     return;
 
-                string zipCode = _zipCodeLogic.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
+                string zipCode = ZIPCodeLogic.GetZipCode(chargeResult.City, chargeResult.StateAbbreviation).Result;
                 if (!DoesCityExist(zipCode, chargeResult.City, chargeResult.StateAbbreviation))
                     return;
 
@@ -39,6 +37,7 @@ namespace ElectricityRateApp.Logic
             }
         }
 
+        // Implementation of the GetHistory abstract method.
         // Method to get a user-specified length of IQueryable<ResidentialChargeResult> and displays them 
         // to the console using the ConsoleTables NuGet extension.
         public override void GetHistory()
@@ -63,7 +62,7 @@ namespace ElectricityRateApp.Logic
             Console.WriteLine();
         }
 
-        //Implementation of the GetInput abstract method.
+        // Implementation of the GetInput abstract method.
         protected override ResidentialChargeResult GetInput(ResidentialChargeResult chargeResult)
         {
             Console.WriteLine("Please provide the name of the city for which you would like estimate your usage-based electric charges.");
@@ -76,7 +75,7 @@ namespace ElectricityRateApp.Logic
             return chargeResult;
         }
 
-        //Implementation of the CheckValidInput method.
+        // Implementation of the CheckValidInput method.
         protected override bool CheckValidInput(ResidentialChargeResult chargeResult)
         {
             bool inputValid = true;
@@ -103,7 +102,7 @@ namespace ElectricityRateApp.Logic
             return inputValid;
         }
 
-        //Implementation of the Save abstract method.
+        // Implementation of the Save abstract method.
         protected override void Save(ResidentialChargeResult chargeResult)
         {
             chargeResult.Time = DateTime.Now;
@@ -114,7 +113,7 @@ namespace ElectricityRateApp.Logic
             }
         }
 
-        //Implementation of the CheckIfRate0 abstract method.
+        // Implementation of the CheckIfRate0 abstract method.
         protected override bool CheckIfRate0(ResidentialChargeResult chargeResult)
         {
             if (chargeResult.Rate == 0)
