@@ -19,7 +19,7 @@ namespace ElectricityRateApp.Models
 
         // Implementation of the PopulateAndDisplayResult abstract method.
         // Method using the implementations of the members of RateGetters<RateComparisonResult>
-        // to  populate the properties of a RateComparsion Result (a comparison of electricity rates)
+        // to populate the properties of a RateComparsion Result (a comparison of electricity rates)
         // and persist that instance of a ResidentialChargeResult to the database.
         public override void PopulateAndDisplayResult(RateComparisonResult rateComparison)
         {
