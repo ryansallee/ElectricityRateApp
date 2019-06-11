@@ -12,8 +12,7 @@ namespace ElectricityRateApp
         {
             Console.SetWindowSize(Console.LargestWindowWidth-10, Console.LargestWindowHeight-15);
             Console.WriteLine("Welcome to the Electricity Rate App.");
-            PowerRateLogic powerRateLogic = new PowerRateLogic();
-            powerRateLogic.AddPowerRates();
+            PowerRateLogic.AddPowerRates();
 
             UtilitySearchLogic utilitySearchLogic = new UtilitySearchLogic();
             ResidentialChargeResultLogic residentialChargeResultLogic = new ResidentialChargeResultLogic();
