@@ -18,7 +18,7 @@ namespace ElectricityRateApp.Logic
             {
                 if (context.PowerRates.Any())
                     return;
-                Console.WriteLine("Since this is the first run of the app, we are adding electricty rate information to the database. This process may take a few minutes.");
+                Console.WriteLine("Since this is the first run of the app, we are adding electricty rate information to the database. This process should take a few moments.");
                 var directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                 string fileName = Path.Combine(directory, "iouzipcodes2016.csv");
                 int i = 1;

@@ -13,6 +13,5 @@ of Object-Oriented Programming: Abstraction, Encapsulation, Inheritance, and Pol
 2. Use NuGet Package Manager Console (Tools>NuGet Package Manager>Package Manager Console) and seed the Rates database with
 test data by using the command update-database. You may have to restore the ConsoleTable, CSVHelper, and Entity Framework packages as well.
 3. Run the the project from Debug. On the first time project is opened, AddPowerRates() will execute
-and add residential rate information to the PowerRate table. Since there are 50,000 + lines in this CSV,
-this code may take anywhere from 10-20 minutes depending on your system.
+and add residential rate information to the PowerRate table. This should only take a few moments.
 4. Once AddPowerRates() has excuted, the main menu will be available to use.
